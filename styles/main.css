@@ -1,0 +1,4 @@
+/* Estilos compartilhados e componentes presentes nas telas. */
+@import url("./global.css");
+@import url("./containers/topbar.css");
+@import url("./containers/sidebar.css");

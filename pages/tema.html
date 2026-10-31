@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080e10" />
+    <title>CarHub | Tema</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/tema.css" />
+    <script src="../scripts/main.js" defer></script>
+  </head>
+  <body data-page="tema">
+    <div data-container="topbar"></div>
+    <div data-container="sidebar"></div>
+    <main class="theme-page">
+      <h1>Tema</h1>
+      <section class="appearance-panel" aria-labelledby="appearance-title">
+        <h2 id="appearance-title">Aparência</h2>
+        <p>Escolha como você quer ver o CarHub.</p>
+        <fieldset class="theme-options">
+          <legend class="sr-only">Escolha o tema da aplicação</legend>
+          <label class="theme-option">
+            <input type="radio" name="theme" value="dark" />
+            <span class="theme-preview preview-dark" aria-hidden="true"
+              ><span class="preview-top"></span
+              ><span class="preview-side"></span
+              ><span class="preview-content"><i></i><i></i><i></i></span
+            ></span>
+            <span class="option-heading"
+              ><strong>Escuro</strong
+              ><span class="radio-mark" aria-hidden="true"></span
+            ></span>
+            <span class="option-description">O visual clássico do CarHub.</span>
+          </label>
+          <label class="theme-option">
+            <input type="radio" name="theme" value="light" />
+            <span class="theme-preview preview-light" aria-hidden="true"
+              ><span class="preview-top"></span
+              ><span class="preview-side"></span
+              ><span class="preview-content"><i></i><i></i><i></i></span
+            ></span>
+            <span class="option-heading"
+              ><strong>Claro</strong
+              ><span class="radio-mark" aria-hidden="true"></span
+            ></span>
+            <span class="option-description">Mais leveza para o seu dia.</span>
+          </label>
+          <label class="theme-option">
+            <input type="radio" name="theme" value="system" />
+            <span class="theme-preview preview-system" aria-hidden="true"
+              ><span class="preview-top"></span
+              ><span class="preview-side"></span
+              ><span class="preview-content"><i></i><i></i><i></i></span
+            ></span>
+            <span class="option-heading"
+              ><strong>Sistema</strong
+              ><span class="radio-mark" aria-hidden="true"></span
+            ></span>
+            <span class="option-description"
+              >Acompanha a aparência do dispositivo.</span
+            >
+          </label>
+        </fieldset>
+        <p
+          class="theme-help"
+          id="theme-status"
+          role="status"
+          aria-live="polite"
+        >
+          Sua preferência é salva automaticamente neste navegador.
+        </p>
+      </section>
+    </main>
+    <dialog id="info-dialog">
+      <button class="dialog-close icon-button" aria-label="Fechar">×</button>
+      <h2></h2>
+      <p></p>
+    </dialog>
+    <div class="toast" role="status" hidden></div>
+  </body>
+</html>
