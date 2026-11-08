@@ -1,4 +1,5 @@
 const paths = {
+  logout: "M13 4H4v24h9M19 9l8 7-8 7M11 16h16",
   chats: "M3 4h21v17H12l-7 6v-6H3ZM25 10h4v18h-5l-5-4",
   close: "m8 8 16 16M24 8 8 24",
   minus: "M7 16h18",

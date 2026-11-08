@@ -169,3 +169,43 @@
     width: 50px;
   }
 }
+
+.account {
+  position: relative;
+}
+.account-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 16px);
+  width: 210px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: 0 10px 32px #0005;
+}
+.account-menu[hidden] {
+  display: none;
+}
+.account-menu-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+}
+.account-menu-item:hover,
+.account-menu-item:focus-visible {
+  background: var(--raised);
+  color: var(--orange);
+}
+.profile-toggle[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+@media (max-width: 850px) {
+  .account .profile-toggle {
+    display: inline-flex;
+  }
+}

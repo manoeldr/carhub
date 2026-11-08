@@ -30,8 +30,29 @@
       ><img class="avatar" src="https://i.pravatar.cc/80?img=26" alt="" /></a
     ><button
       class="icon-button profile-toggle"
+      id="account-menu-toggle"
       aria-label="Abrir opções do perfil"
+      aria-haspopup="menu"
+      aria-expanded="false"
+      aria-controls="account-menu"
       data-icon="chevron"
     ></button>
+    <div
+      class="account-menu"
+      id="account-menu"
+      role="menu"
+      aria-labelledby="account-menu-toggle"
+      hidden
+    >
+      <a
+        class="account-menu-item"
+        href="login.html"
+        data-page-link="login"
+        role="menuitem"
+      >
+        <span class="inline-icon" data-icon="logout" aria-hidden="true"></span>
+        Sair da conta
+      </a>
+    </div>
   </div>
 </header>
