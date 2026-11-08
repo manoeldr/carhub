@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080e10" />
+    <title>CarHub | Configurações</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/configuracoes.css" />
+    <script src="../scripts/main.js" defer></script>
+  </head>
+
+  <body data-page="configuracoes">
+    <div data-container="topbar"></div>
+    <div data-container="sidebar"></div>
+
+    <main class="config-page">
+      <h1>Configurações</h1>
+
+      <section class="bloco">
+        <h2>Conta</h2>
+        <label for="email">Email registrado</label>
+        <div class="linha-email">
+          <input type="email" id="email" value="seu-email@exemplo.com" disabled />
+          <button type="button" class="btn-bloco" id="btn-senha">Alterar senha</button>
+        </div>
+      </section>
+
+      <section class="bloco">
+        <h2>Notificações</h2>
+        <label class="opcao"><span>Curtidas e comentários</span><input type="checkbox" id="cfg-curtidas" /></label>
+        <label class="opcao"><span>Novos eventos próximos</span><input type="checkbox" id="cfg-eventos" /></label>
+      </section>
+
+      <section class="bloco">
+        <h2>Privacidade</h2>
+        <label class="opcao"><span>Perfil público (todos podem ver seus posts e eventos)</span><input type="checkbox" id="cfg-publico" /></label>
+      </section>
+
+      <button type="button" class="btn-sair" id="btn-sair">Sair da conta</button>
+    </main>
+
+    <dialog id="info-dialog">
+      <button class="dialog-close icon-button" aria-label="Fechar">×</button>
+      <h2></h2>
+      <p></p>
+    </dialog>
+    <div class="toast" role="status" hidden></div>
+  </body>
+</html>
