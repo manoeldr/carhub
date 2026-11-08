@@ -1,7 +1,27 @@
 window.containersReady.then(() => {
-  document.querySelector(".menu-toggle").addEventListener("click", (e) => {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const sidebarStateKey = "carhub-sidebar-collapsed";
+  try {
+    document.body.classList.toggle(
+      "collapsed",
+      localStorage.getItem(sidebarStateKey) === "true",
+    );
+  } catch {}
+  function updateSidebarButton() {
+    const collapsed = document.body.classList.contains("collapsed");
+    menuToggle.setAttribute("aria-expanded", String(!collapsed));
+    menuToggle.setAttribute(
+      "aria-label",
+      collapsed ? "Expandir menu" : "Recolher menu",
+    );
+  }
+  updateSidebarButton();
+  menuToggle.addEventListener("click", () => {
     const collapsed = document.body.classList.toggle("collapsed");
-    e.currentTarget.setAttribute("aria-expanded", String(!collapsed));
+    updateSidebarButton();
+    try {
+      localStorage.setItem(sidebarStateKey, String(collapsed));
+    } catch {}
   });
   document
     .querySelector(".notification")
