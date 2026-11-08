@@ -9,6 +9,6 @@ window.containersReady.then(() => {
       notify("Você está em dia! Nenhuma nova notificação."),
     );
   document.querySelector(".profile-toggle").addEventListener("click", () => {
-    notify("A tela de perfil ainda está em desenvolvimento.");
+    window.location.href = document.querySelector(".account-link").href;
   });
 });
