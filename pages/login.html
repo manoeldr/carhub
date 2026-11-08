@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080e10" />
+    <title>CarHub | Entrar</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/login.css" />
+    <script src="../scripts/main.js" defer></script>
+  </head>
+  <body data-page="login">
+    <header class="topbar auth-topbar">
+      <a class="brand" href="principal.html" aria-label="CarHub, página inicial"
+        ><span class="brand-mark" data-icon="logo"></span
+        ><span>CAR<strong>HUB</strong></span></a
+      >
+    </header>
+    <main class="auth-page">
+      <section class="auth-card" aria-labelledby="login-title">
+        <h1 id="login-title">Acessar minha conta</h1>
+        <p class="auth-subtitle">Bem-vindo de volta ao CarHub!</p>
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="login-user">E-mail ou nome de usuário</label>
+            <input
+              id="login-user"
+              name="user"
+              autocomplete="username"
+              autocapitalize="none"
+              spellcheck="false"
+              placeholder="seu.email@exemplo.com ou @usuario"
+              aria-describedby="login-user-error"
+              required
+            />
+            <p class="field-error" id="login-user-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="login-password">Senha</label>
+            <input
+              id="login-password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Digite sua senha"
+              aria-describedby="login-password-error"
+              required
+            />
+            <p class="field-error" id="login-password-error" hidden></p>
+          </div>
+          <button class="link-button forgot" type="button" id="forgot">
+            Esqueceu a senha?
+          </button>
+          <button class="button button-primary submit" type="submit">
+            Entrar
+          </button>
+        </form>
+        <p class="auth-switch">
+          Ainda não tem conta?
+          <button class="link-button" type="button" id="signup">
+            Cadastre-se
+          </button>
+        </p>
+      </section>
+    </main>
+    <dialog id="info-dialog">
+      <button class="dialog-close icon-button" aria-label="Fechar">×</button>
+      <h2></h2>
+      <p></p>
+    </dialog>
+    <div class="toast" role="status" hidden></div>
+  </body>
+</html>
