@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080e10" />
+    <title>CarHub | Perfil</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/perfil.css" />
+    <script src="../scripts/main.js" defer></script>
+  </head>
+  <body data-page="perfil">
+    <div data-container="topbar"></div>
+    <div data-container="sidebar"></div>
+    <main class="profile-page">
+      <section class="profile-header" aria-label="Informações do perfil">
+        <div class="profile-cover" aria-hidden="true"></div>
+        <div class="profile-info">
+          <img
+            class="profile-avatar"
+            src="https://i.pravatar.cc/240?img=12"
+            alt="Foto de perfil de Gabriela Faraon"
+          />
+          <div class="profile-identity">
+            <h1 class="profile-name">Gabriela Faraon</h1>
+            <p class="profile-meta">@gbfaraon • 📍 Caxias do Sul, RS</p>
+            <p class="profile-bio">
+              Fotografia automotiva, encontros e cobertura de trackdays 🏁
+            </p>
+          </div>
+          <div class="profile-actions">
+            <button class="button button-secondary" type="button" id="edit-profile">
+              Editar perfil
+            </button>
+            <button class="button button-primary" type="button" id="new-photo">
+              + Nova foto
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <ul class="profile-stats" aria-label="Números do perfil">
+        <li><strong data-stat="posts"></strong><span>Publicações</span></li>
+        <li><strong data-stat="events"></strong><span>Eventos</span></li>
+        <li><strong data-stat="followers"></strong><span>Seguidores</span></li>
+        <li><strong data-stat="following"></strong><span>Seguindo</span></li>
+      </ul>
+
+      <div class="profile-tabs" role="tablist" aria-label="Conteúdo do perfil">
+        <button class="tab" role="tab" id="tab-photos" data-tab="photos" aria-controls="tab-panel">
+          <span aria-hidden="true">📸</span> Fotos (<span data-count="photos"></span>)
+        </button>
+        <button class="tab" role="tab" id="tab-events" data-tab="events" aria-controls="tab-panel">
+          <span aria-hidden="true">📅</span> Meus eventos (<span data-count="events"></span>)
+        </button>
+        <button class="tab" role="tab" id="tab-saved" data-tab="saved" aria-controls="tab-panel">
+          <span aria-hidden="true">🏷️</span> Salvos
+        </button>
+      </div>
+      <section id="tab-panel" role="tabpanel" tabindex="0"></section>
+    </main>
+    <dialog id="info-dialog">
+      <button class="dialog-close icon-button" aria-label="Fechar">×</button>
+      <h2></h2>
+      <p></p>
+    </dialog>
+    <div class="toast" role="status" hidden></div>
+  </body>
+</html>
