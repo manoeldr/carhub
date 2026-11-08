@@ -1,0 +1,89 @@
+<div class="chat-widget">
+  <section
+    class="chat-panel"
+    id="chat-panel"
+    role="dialog"
+    aria-modal="false"
+    aria-label="Chats do CarHub"
+    hidden
+  >
+    <header class="chat-header">
+      <button
+        class="icon-button"
+        id="chat-back"
+        aria-label="Voltar para as conversas"
+        data-icon="arrow-left"
+        hidden
+      ></button>
+      <div class="chat-heading">
+        <h2 id="chat-title">Chats</h2>
+        <p id="chat-subtitle">Sua comunidade, mais perto.</p>
+      </div>
+      <button
+        class="icon-button"
+        id="chat-minimize"
+        aria-label="Minimizar chats"
+        data-icon="minus"
+      ></button>
+      <button
+        class="icon-button"
+        id="chat-close"
+        aria-label="Fechar chats"
+        data-icon="close"
+      ></button>
+    </header>
+    <div id="chat-inbox" class="chat-inbox">
+      <label class="chat-search"
+        ><span class="inline-icon" data-icon="search" aria-hidden="true"></span
+        ><input
+          type="search"
+          id="chat-search"
+          placeholder="Buscar conversa..."
+          aria-label="Buscar conversa"
+      /></label>
+      <p class="chat-section-label">CONVERSAS</p>
+      <div id="chat-contacts" class="chat-contacts"></div>
+      <p class="chat-empty" id="chat-empty" hidden>
+        Nenhuma conversa encontrada.
+      </p>
+    </div>
+    <div id="chat-conversation" class="chat-conversation" hidden>
+      <div
+        id="chat-messages"
+        class="chat-messages"
+        role="log"
+        aria-label="Mensagens da conversa"
+        aria-live="polite"
+        aria-relevant="additions text"
+      ></div>
+      <form id="chat-form" class="chat-form">
+        <input
+          id="chat-message"
+          placeholder="Escreva uma mensagem..."
+          aria-label="Mensagem"
+          autocomplete="off"
+          maxlength="1000"
+          required
+        />
+        <button
+          class="icon-button chat-send"
+          type="submit"
+          aria-label="Enviar mensagem"
+          data-icon="send"
+        ></button>
+      </form>
+    </div>
+    <p class="chat-demo">Demonstração · mensagens salvas neste navegador</p>
+  </section>
+  <button
+    class="chat-launcher"
+    id="chat-launcher"
+    aria-label="Abrir chats"
+    aria-expanded="false"
+    aria-controls="chat-panel"
+  >
+    <span data-icon="chats" aria-hidden="true"></span
+    ><span class="chat-launcher-text">Chats</span
+    ><span class="chat-badge" id="chat-badge" aria-hidden="true" hidden></span>
+  </button>
+</div>

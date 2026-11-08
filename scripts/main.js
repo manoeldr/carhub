@@ -25,6 +25,9 @@ async function start() {
   if (document.querySelector('[data-container="sidebar"]'))
     await loadScript("scripts/containers/sidebar.js");
 
+  if (document.querySelector('[data-container="chats"]'))
+    await loadScript("scripts/containers/chats.js");
+
   renderIcons();
 
   const page = document.body.dataset.page;
