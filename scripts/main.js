@@ -1,10 +1,13 @@
 // Ponto de entrada: carrega os arquivos compartilhados, componentes e a tela.
+const assetVersion = new URL(document.currentScript.src).searchParams.get("v");
 const projectRoot = new URL("../", document.currentScript.src);
 
 async function loadScript(path) {
   return new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = new URL(path, projectRoot).href;
+    const url = new URL(path, projectRoot);
+    if (assetVersion) url.searchParams.set("v", assetVersion);
+    script.src = url.href;
     script.onload = resolve;
     script.onerror = () =>
       reject(new Error(`Não foi possível carregar ${path}.`));

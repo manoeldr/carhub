@@ -67,7 +67,7 @@ window.loadContainers = (projectRoot) =>
       async (container) => {
         const name = container.dataset.container;
         const url = new URL(`pages/containers/${name}.html`, projectRoot);
-        const response = await fetch(url);
+        const response = await fetch(url, { cache: "no-cache" });
         if (!response.ok) throw new Error(`Não foi possível carregar ${name}.`);
         container.innerHTML = await response.text();
         container.querySelectorAll("[data-icon]").forEach((element) => {
