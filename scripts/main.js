@@ -28,6 +28,9 @@ async function start() {
   if (document.querySelector('[data-container="chats"]'))
     await loadScript("scripts/containers/chats.js");
 
+  if (document.querySelector('[data-container="footer"]'))
+    await loadScript("scripts/containers/footer.js");
+
   renderIcons();
 
   const page = document.body.dataset.page;

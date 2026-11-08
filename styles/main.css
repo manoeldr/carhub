@@ -1,5 +1,6 @@
 /* Estilos compartilhados e componentes presentes nas telas. */
-@import url("./global.css?v=20261108-account");
-@import url("./containers/topbar.css?v=20261108-account");
-@import url("./containers/sidebar.css?v=20261108-account");
-@import url("./containers/chats.css?v=20261108-account");
+@import url("./global.css?v=20261108-footer");
+@import url("./containers/topbar.css?v=20261108-footer");
+@import url("./containers/sidebar.css?v=20261108-footer");
+@import url("./containers/chats.css?v=20261108-footer");
+@import url("./containers/footer.css?v=20261108-footer");

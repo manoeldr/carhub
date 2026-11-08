@@ -31,6 +31,7 @@ Acesse [http://localhost:5500](http://localhost:5500).
 - Busca por título, autor, legenda e tags.
 - Curtidas, comentários, favoritos e publicação com imagem, mantidos apenas durante a sessão da página.
 - Sidebar e topbar fixas, com menu recolhível.
+- Rodapé compartilhado com informações do projeto, termos e privacidade.
 - Tela Tema com aparência escura, clara ou de acordo com o sistema. A preferência é salva no `localStorage` e aplicada a todas as telas.
 - Tela Login com validação de e-mail/usuário e senha. Sem backend: ao validar, segue para a página Principal.
 - Tela Perfil com capa, estatísticas, abas (Fotos, Meus eventos, Salvos) e grade de fotos de demonstração.
@@ -80,7 +81,7 @@ Cada tela possui seu HTML, CSS e JavaScript. Os componentes compartilhados segue
 
 [Ver o projeto CARHUB no Figma](https://www.figma.com/design/m7DuEU4P5v5mPEITvPsP3M/CARHUB?node-id=0-1).
 
-As imagens abaixo são **referências do Figma**, não capturas da implementação atual. O rodapé foi removido da implementação conforme a definição do projeto. A tela Tema foi criada seguindo o estilo visual das referências.
+As imagens abaixo são **referências do Figma**, não capturas da implementação atual. O rodapé está disponível como componente compartilhado nas telas, com links institucionais e direitos autorais. A tela Tema foi criada seguindo o estilo visual das referências.
 
 ### Principal
 

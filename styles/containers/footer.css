@@ -1,0 +1,86 @@
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 22px;
+  min-height: 78px;
+  margin: 24px 52px 24px calc(32px + var(--side) + var(--gap));
+  padding: 22px 30px;
+  background: var(--panel);
+  color: var(--muted);
+  border-left: 4px solid var(--orange);
+  border-radius: 8px;
+  font-size: 12px;
+}
+.footer-brand {
+  color: var(--text);
+  font-size: 21px;
+  letter-spacing: 5px;
+  white-space: nowrap;
+}
+.footer-brand strong {
+  color: var(--orange);
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 0;
+}
+.footer-links button {
+  padding: 0 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.footer-links button + button {
+  border-left: 1px solid var(--line);
+}
+.footer-links button:hover {
+  color: var(--text);
+}
+.site-footer p {
+  margin: 0;
+  line-height: 1.5;
+}
+body:has([data-container="footer"]) main {
+  min-height: calc(100dvh - 280px);
+}
+body[data-page="login"] .site-footer {
+  margin-left: 32px;
+  margin-right: 32px;
+}
+body[data-page="login"] .auth-page {
+  min-height: calc(100dvh - var(--header) - 250px);
+}
+@media (max-width: 1300px) {
+  .site-footer {
+    margin-right: 32px;
+  }
+}
+@media (max-width: 850px) {
+  .site-footer {
+    margin-left: calc(16px + var(--side) + var(--gap));
+    margin-right: 16px;
+    padding: 20px;
+  }
+  body.collapsed .site-footer {
+    margin-left: 16px;
+  }
+  body:has([data-container="footer"]) main {
+    min-height: calc(100dvh - 250px);
+  }
+  .footer-links {
+    gap: 12px;
+  }
+  .footer-links button {
+    padding: 0;
+  }
+  .footer-links button + button {
+    border: 0;
+  }
+}
+/* Reserva espaço para o botão flutuante sem cobrir o texto do rodapé. */
+body:has([data-container="chats"]) .site-footer {
+  margin-bottom: 100px;
+}
