@@ -16,8 +16,11 @@ async function start() {
   await loadScript("scripts/global.js");
   window.containersReady = window.loadContainers(projectRoot);
   await window.containersReady;
-  await loadScript("scripts/containers/topbar.js");
-  await loadScript("scripts/containers/sidebar.js");
+  // Telas sem esses componentes (ex.: Login) não carregam os scripts deles.
+  if (document.querySelector('[data-container="topbar"]'))
+    await loadScript("scripts/containers/topbar.js");
+  if (document.querySelector('[data-container="sidebar"]'))
+    await loadScript("scripts/containers/sidebar.js");
 
   const page = document.body.dataset.page;
   if (page) await loadScript(`scripts/${page}.js`);
