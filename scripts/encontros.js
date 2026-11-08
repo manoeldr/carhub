@@ -1,51 +1,13 @@
-const CHAVE = "carhub-eventos";
-
-const eventosIniciais = [
-  {
-    id: 1,
-    titulo: "Classic Muscle Meeting",
-    dia: "25",
-    mes: "OUT",
-    autor: "mariwelisa",
-    local: "Parque do Imigrante, Caxias do Sul",
-    cidade: "Caxias do Sul",
-    tipo: "Exposição",
-    vao: 120,
-    imagem: "../images/eventos/evento1.png",
-    resposta: "",
-    criado: false,
-  },
-  {
-    id: 2,
-    titulo: "Night Meet – Edição Drift",
-    dia: "31",
-    mes: "OUT",
-    autor: "mariwelisa",
-    local: "Kartódromo Internacional",
-    cidade: "Guaporé",
-    tipo: "Drift",
-    vao: 210,
-    imagem: "../images/eventos/evento2.png",
-    resposta: "",
-    criado: false,
-  },
-];
-
 const lista = document.querySelector("#lista-eventos");
 const aviso = document.querySelector("#sem-eventos");
 const chips = document.querySelectorAll(".chip");
 
-function carregar() {
-  const texto = localStorage.getItem(CHAVE);
-  return texto ? JSON.parse(texto) : eventosIniciais;
-}
+let eventos = carregarEventos();
+let filtro = null;
 
 function salvar() {
-  localStorage.setItem(CHAVE, JSON.stringify(eventos));
+  salvarEventos(eventos);
 }
-
-let eventos = carregar();
-let filtro = null;
 
 function mostrar() {
   const visiveis = eventos.filter((e) => !filtro || e[filtro.campo] === filtro.valor);
@@ -84,18 +46,19 @@ function ligarBotoes() {
 }
 
 function agir(acao, id) {
-  const evento = eventos.filter((e) => e.id === id)[0];
+  const evento = eventos.filter((e) => e.id === id)[0]; 
   if (!evento) return;
 
   if (acao === "vou" || acao === "naovou") {
     responder(evento, acao);
   } else if (acao === "compartilhar") {
-    notify(`Link do evento "${evento.titulo}" copiado pra sua área de transferência.`);
+    notify(`Link do evento "${evento.titulo}" compartilhado!`);
   } else if (acao === "excluir") {
     excluir(id);
   }
 }
 
+// ===== UPDATE: Vou / Não Vou =====
 function responder(evento, nova) {
   if (evento.resposta === "vou") evento.vao--;
   if (evento.resposta === nova) {
