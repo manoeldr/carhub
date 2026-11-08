@@ -40,7 +40,7 @@ O projeto está em desenvolvimento. Encontros, criação completa de publicaçã
 
 ## Chats
 
-Painel flutuante fixo no canto inferior direito, disponível nas telas internas. Permite buscar conversas, abrir uma conversa, enviar mensagens locais e minimizar ou fechar o painel. O histórico (até 100 mensagens por conversa) e a leitura das conversas são salvos neste navegador. Os contatos e mensagens recebidas são fictícios; não há comunicação entre usuários nem envio por servidor.
+Painel flutuante fixo no canto inferior direito, disponível nas telas Principal, Encontros, Criar publicação e Perfil. Não aparece em Tema, Configurações ou Login. Permite buscar conversas, abrir uma conversa, enviar mensagens locais e minimizar ou fechar o painel. O histórico (até 100 mensagens por conversa) e a leitura das conversas são salvos neste navegador. Os contatos e mensagens recebidas são fictícios; não há comunicação entre usuários nem envio por servidor.
 
 O componente segue a estrutura do projeto: `pages/containers/chats.html`, `styles/containers/chats.css` e `scripts/containers/chats.js`.
 
