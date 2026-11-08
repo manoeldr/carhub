@@ -1,0 +1,115 @@
+.encontros-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 22px;
+  background: var(--panel);
+  border-radius: 20px;
+}
+.chip {
+  padding: 14px 26px;
+  background: var(--raised);
+  color: var(--text);
+  border-radius: 10px;
+}
+.chip.ativo {
+  background: var(--orange);
+  color: #fff;
+}
+
+.lista-eventos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.card-evento {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  background: var(--panel);
+  border-radius: 22px;
+}
+.capa {
+  position: relative;
+  height: 240px;
+  border-radius: 16px;
+  background: var(--raised);
+  overflow: hidden;
+}
+.capa img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.data {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  text-align: center;
+  line-height: 1.1;
+  border-radius: 12px;
+}
+.data strong {
+  font-size: 34px;
+}
+.data span {
+  color: var(--orange);
+  font-weight: 700;
+}
+.card-evento h2 {
+  margin: 0;
+  font-size: 22px;
+}
+.linha-info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: var(--muted);
+}
+.vao {
+  color: var(--orange);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.btn {
+  flex: 1;
+  padding: 16px 12px;
+  background: var(--raised);
+  color: var(--text);
+  text-align: center;
+  border-radius: 10px;
+}
+.btn.ativo {
+  background: var(--orange);
+  color: #fff;
+}
+.sem-eventos {
+  text-align: center;
+  color: var(--muted);
+}
+
+@media (max-width: 850px) {
+  .lista-eventos {
+    grid-template-columns: 1fr;
+  }
+  .capa {
+    height: 200px;
+  }
+}
