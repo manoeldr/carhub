@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080e10" />
+    <title>CarHub | Encontros</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/encontros.css" />
+    <script src="../scripts/dados-eventos.js"></script>
+    <script src="../scripts/main.js" defer></script>
+  </head>
+
+  <body data-page="encontros">
+    <div data-container="topbar"></div>
+    <div data-container="sidebar"></div>
+
+    <main class="encontros-page">
+      <h1 class="sr-only">Encontros</h1>
+
+      <section class="filtros" aria-label="Filtrar encontros">
+        <button class="chip" data-campo="cidade" data-valor="Caxias do Sul">📍 Caxias do Sul (50km)</button>
+        <button class="chip" data-campo="tipo" data-valor="Exposição">Exposição</button>
+        <button class="chip" data-campo="tipo" data-valor="Track Day">Track Day</button>
+        <button class="chip" data-campo="tipo" data-valor="Arrancada">Arrancada</button>
+        <button class="chip" data-campo="tipo" data-valor="Drift">Drift</button>
+      </section>
+
+      <section class="lista-eventos" id="lista-eventos"></section>
+      <p class="sem-eventos" id="sem-eventos" hidden>Nenhum encontro encontrado.</p>
+    </main>
+
+      <dialog id="info-dialog">
+        <button class="dialog-close icon-button" aria-label="Fechar">×</button>
+        <h2></h2>
+        <p></p>
+        </dialog>
+      <div class="toast" role="status" hidden></div>
+
+  </body>
+</html>

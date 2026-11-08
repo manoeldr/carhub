@@ -1,0 +1,71 @@
+.config-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 900px;
+}
+.config-page h1 {
+  margin: 0;
+  font-size: 32px;
+}
+.bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+.bloco h2 {
+  margin: 0;
+  font-size: 22px;
+}
+.bloco > label {
+  color: var(--muted);
+}
+.linha-email {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.linha-email input {
+  flex: 2 1 260px;
+  padding: 18px;
+  background: var(--raised);
+  border-radius: 12px;
+}
+.btn-bloco {
+  flex: 1 1 160px;
+  padding: 18px;
+  background: var(--raised);
+  color: var(--text);
+  border-radius: 12px;
+}
+.opcao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+}
+.opcao input {
+  width: 26px;
+  height: 26px;
+  accent-color: var(--orange);
+  cursor: pointer;
+}
+.btn-sair {
+  align-self: flex-start;
+  padding: 16px 28px;
+  background: var(--raised);
+  color: var(--orange);
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+@media (max-width: 600px) {
+  .bloco {
+    padding: 18px;
+  }
+}
