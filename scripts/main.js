@@ -22,6 +22,8 @@ async function start() {
   if (document.querySelector('[data-container="sidebar"]'))
     await loadScript("scripts/containers/sidebar.js");
 
+  renderIcons();
+
   const page = document.body.dataset.page;
   if (page) await loadScript(`scripts/${page}.js`);
 }

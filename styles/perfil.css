@@ -186,3 +186,15 @@
     gap: 16px;
   }
 }
+
+.profile-tabs .tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.profile-actions .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}

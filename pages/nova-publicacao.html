@@ -19,22 +19,26 @@
       <section class="topo-nova">
         <h1>Nova publicação</h1>
         <div class="abas">
-          <button type="button" class="aba ativa" id="aba-post">Foto/vídeo</button>
+          <button type="button" class="aba ativa" id="aba-post">
+            Foto/vídeo
+          </button>
           <button type="button" class="aba" id="aba-evento">Novo evento</button>
         </div>
       </section>
 
       <div class="colunas">
         <section class="area-midia">
-          <div class="icone-camera" aria-hidden="true">📷</div>
+          <div class="icone-camera" aria-hidden="true" data-icon="camera"></div>
           <h2>Arraste suas fotos ou vídeos aqui</h2>
           <p>Suporta PNG, JPG e MP4 (Até 10 arquivos)</p>
-          <button type="button" class="btn-escuro" id="btn-arquivo">Selecionar arquivo</button>
+          <button type="button" class="btn-escuro" id="btn-arquivo">
+            Selecionar arquivo
+          </button>
         </section>
 
         <section class="painel-form">
           <div class="usuario">
-            <div class="avatar-nova" aria-hidden="true">👤</div>
+            <div class="avatar-nova" aria-hidden="true" data-icon="user"></div>
             <div>
               <strong>seu.usuario</strong>
               <p>Publicando no CarHub</p>
@@ -43,12 +47,22 @@
 
           <form id="form-post">
             <label for="legenda" class="sr-only">Legenda</label>
-            <input type="text" id="legenda" class="campo-legenda" maxlength="200" required
-              placeholder="Escreva uma legenda... Use #hashtags para categorizar" />
+            <input
+              type="text"
+              id="legenda"
+              class="campo-legenda"
+              maxlength="200"
+              required
+              placeholder="Escreva uma legenda... Use #hashtags para categorizar"
+            />
 
             <label for="veiculo">Qual seu veículo?</label>
-            <input type="text" id="veiculo" list="lista-veiculos"
-              placeholder="Selecione um carro (ex: Nissan Skyline R34)" />
+            <input
+              type="text"
+              id="veiculo"
+              list="lista-veiculos"
+              placeholder="Selecione um carro (ex: Nissan Skyline R34)"
+            />
             <datalist id="lista-veiculos">
               <option value="Nissan Skyline R34"></option>
               <option value="Volkswagen Fusca"></option>
@@ -58,17 +72,31 @@
             </datalist>
 
             <label for="local">Adicione sua localização</label>
-            <input type="text" id="local" placeholder="Pesquisar local ou autódromo..." />
+            <input
+              type="text"
+              id="local"
+              placeholder="Pesquisar local ou autódromo..."
+            />
 
             <label for="marca">Marcar preparadora ou peças (opcional)</label>
-            <input type="text" id="marca" placeholder="Marcar @oficina ou marca de peça" />
+            <input
+              type="text"
+              id="marca"
+              placeholder="Marcar @oficina ou marca de peça"
+            />
 
             <button type="submit" class="btn-laranja">Publicar agora</button>
           </form>
 
           <form id="form-evento" hidden>
             <label for="ev-titulo">Nome do evento</label>
-            <input type="text" id="ev-titulo" maxlength="60" required placeholder="Ex: Classic Muscle Meeting" />
+            <input
+              type="text"
+              id="ev-titulo"
+              maxlength="60"
+              required
+              placeholder="Ex: Classic Muscle Meeting"
+            />
 
             <label for="ev-data">Data</label>
             <input type="date" id="ev-data" required />
@@ -77,17 +105,38 @@
             <input type="time" id="ev-hora" />
 
             <label for="ev-local">Local</label>
-            <input type="text" id="ev-local" required placeholder="Ex: Parque do Imigrante" />
+            <input
+              type="text"
+              id="ev-local"
+              required
+              placeholder="Ex: Parque do Imigrante"
+            />
 
             <label for="ev-cidade">Cidade</label>
-            <input type="text" id="ev-cidade" required placeholder="Ex: Caxias do Sul" />
+            <input
+              type="text"
+              id="ev-cidade"
+              required
+              placeholder="Ex: Caxias do Sul"
+            />
 
             <fieldset>
               <legend>Tipo de evento</legend>
-              <label><input type="radio" name="tipo" value="Exposição" required /> Exposição</label>
-              <label><input type="radio" name="tipo" value="Track Day" /> Track Day</label>
-              <label><input type="radio" name="tipo" value="Arrancada" /> Arrancada</label>
-              <label><input type="radio" name="tipo" value="Drift" /> Drift</label>
+              <label
+                ><input type="radio" name="tipo" value="Exposição" required />
+                Exposição</label
+              >
+              <label
+                ><input type="radio" name="tipo" value="Track Day" /> Track
+                Day</label
+              >
+              <label
+                ><input type="radio" name="tipo" value="Arrancada" />
+                Arrancada</label
+              >
+              <label
+                ><input type="radio" name="tipo" value="Drift" /> Drift</label
+              >
             </fieldset>
 
             <button type="submit" class="btn-laranja">Publicar evento</button>

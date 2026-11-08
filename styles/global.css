@@ -193,3 +193,14 @@ dialog::backdrop {
 .button-secondary:hover {
   background: var(--line);
 }
+
+/* Ícones que acompanham textos, botões e informações. */
+.inline-icon {
+  display: inline-flex;
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+}

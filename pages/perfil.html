@@ -23,17 +23,39 @@
           />
           <div class="profile-identity">
             <h1 class="profile-name">Gabriela Faraon</h1>
-            <p class="profile-meta">@gbfaraon • 📍 Caxias do Sul, RS</p>
+            <p class="profile-meta">
+              @gbfaraon •
+              <span
+                class="inline-icon"
+                data-icon="pin"
+                aria-hidden="true"
+              ></span>
+              Caxias do Sul, RS
+            </p>
             <p class="profile-bio">
-              Fotografia automotiva, encontros e cobertura de trackdays 🏁
+              Fotografia automotiva, encontros e cobertura de trackdays
+              <span
+                class="inline-icon"
+                data-icon="flag"
+                aria-hidden="true"
+              ></span>
             </p>
           </div>
           <div class="profile-actions">
-            <button class="button button-secondary" type="button" id="edit-profile">
+            <button
+              class="button button-secondary"
+              type="button"
+              id="edit-profile"
+            >
               Editar perfil
             </button>
             <button class="button button-primary" type="button" id="new-photo">
-              + Nova foto
+              <span
+                class="inline-icon"
+                data-icon="plus"
+                aria-hidden="true"
+              ></span>
+              Nova foto
             </button>
           </div>
         </div>
@@ -47,14 +69,47 @@
       </ul>
 
       <div class="profile-tabs" role="tablist" aria-label="Conteúdo do perfil">
-        <button class="tab" role="tab" id="tab-photos" data-tab="photos" aria-controls="tab-panel">
-          <span aria-hidden="true">📸</span> Fotos (<span data-count="photos"></span>)
+        <button
+          class="tab"
+          role="tab"
+          id="tab-photos"
+          data-tab="photos"
+          aria-controls="tab-panel"
+        >
+          <span
+            class="inline-icon"
+            data-icon="camera"
+            aria-hidden="true"
+          ></span>
+          Fotos (<span data-count="photos"></span>)
         </button>
-        <button class="tab" role="tab" id="tab-events" data-tab="events" aria-controls="tab-panel">
-          <span aria-hidden="true">📅</span> Meus eventos (<span data-count="events"></span>)
+        <button
+          class="tab"
+          role="tab"
+          id="tab-events"
+          data-tab="events"
+          aria-controls="tab-panel"
+        >
+          <span
+            class="inline-icon"
+            data-icon="calendar"
+            aria-hidden="true"
+          ></span>
+          Meus eventos (<span data-count="events"></span>)
         </button>
-        <button class="tab" role="tab" id="tab-saved" data-tab="saved" aria-controls="tab-panel">
-          <span aria-hidden="true">🏷️</span> Salvos
+        <button
+          class="tab"
+          role="tab"
+          id="tab-saved"
+          data-tab="saved"
+          aria-controls="tab-panel"
+        >
+          <span
+            class="inline-icon"
+            data-icon="bookmark"
+            aria-hidden="true"
+          ></span>
+          Salvos
         </button>
       </div>
       <section id="tab-panel" role="tabpanel" tabindex="0"></section>

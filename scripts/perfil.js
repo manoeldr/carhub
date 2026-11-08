@@ -6,18 +6,90 @@ window.containersReady.then(() => {
 
   const profile = { followers: 1420, following: 380 };
   const photos = [
-    { title: "BMW branco", caption: "Detalhes que fazem a diferença. 🖤", image: "../images/posts/carro-01.jpg", likes: 245, comments: 12 },
-    { title: "Lamborghini branco", caption: "Linhas que param qualquer rua. 🏁", image: "../images/posts/carro-02.jpg", likes: 312, comments: 28 },
-    { title: "Ferrari vermelha", caption: "Vermelho que ninguém ignora. 🔥", image: "../images/posts/carro-03.jpg", likes: 198, comments: 15 },
-    { title: "Ford Expedition", caption: "Espaço e presença na estrada. 🛣️", image: "../images/posts/carro-04.jpg", likes: 421, comments: 19 },
-    { title: "Porsche Panamera", caption: "Conforto e esportividade juntos. ✨", image: "../images/posts/carro-05.jpg", likes: 167, comments: 8 },
-    { title: "Chevrolet Camaro", caption: "Clássico americano em ação. 🚘", image: "../images/posts/carro-06.jpg", likes: 389, comments: 31 },
-    { title: "BMW azul", caption: "Azul que combina com a luz da tarde. 📸", image: "../images/posts/carro-07.jpg", likes: 276, comments: 14 },
-    { title: "Volkswagen Fusca", caption: "Nostalgia que nunca sai de moda. 💛", image: "../images/posts/carro-08.jpg", likes: 534, comments: 42 },
-    { title: "Ford Mustang", caption: "Mais um registro para a coleção. 📸", image: "../images/posts/carro-09.jpg", likes: 352, comments: 23 },
-    { title: "Fiat 500", caption: "Pequeno, simpático e cheio de estilo. 😍", image: "../images/posts/carro-10.jpg", likes: 143, comments: 6 },
-    { title: "Lamborghini amarelo", caption: "Amarelo para chamar atenção. ⚡", image: "../images/posts/carro-11.jpg", likes: 468, comments: 36 },
-    { title: "McLaren branco", caption: "Aerodinâmica que dá gosto de ver. 🏎️", image: "../images/posts/carro-12.jpg", likes: 291, comments: 17 },
+    {
+      title: "BMW branco",
+      caption: "Detalhes que fazem a diferença.",
+      image: "../images/posts/carro-01.jpg",
+      likes: 245,
+      comments: 12,
+    },
+    {
+      title: "Lamborghini branco",
+      caption: "Linhas que param qualquer rua.",
+      image: "../images/posts/carro-02.jpg",
+      likes: 312,
+      comments: 28,
+    },
+    {
+      title: "Ferrari vermelha",
+      caption: "Vermelho que ninguém ignora.",
+      image: "../images/posts/carro-03.jpg",
+      likes: 198,
+      comments: 15,
+    },
+    {
+      title: "Ford Expedition",
+      caption: "Espaço e presença na estrada.",
+      image: "../images/posts/carro-04.jpg",
+      likes: 421,
+      comments: 19,
+    },
+    {
+      title: "Porsche Panamera",
+      caption: "Conforto e esportividade juntos.",
+      image: "../images/posts/carro-05.jpg",
+      likes: 167,
+      comments: 8,
+    },
+    {
+      title: "Chevrolet Camaro",
+      caption: "Clássico americano em ação.",
+      image: "../images/posts/carro-06.jpg",
+      likes: 389,
+      comments: 31,
+    },
+    {
+      title: "BMW azul",
+      caption: "Azul que combina com a luz da tarde.",
+      image: "../images/posts/carro-07.jpg",
+      likes: 276,
+      comments: 14,
+    },
+    {
+      title: "Volkswagen Fusca",
+      caption: "Nostalgia que nunca sai de moda.",
+      image: "../images/posts/carro-08.jpg",
+      likes: 534,
+      comments: 42,
+    },
+    {
+      title: "Ford Mustang",
+      caption: "Mais um registro para a coleção.",
+      image: "../images/posts/carro-09.jpg",
+      likes: 352,
+      comments: 23,
+    },
+    {
+      title: "Fiat 500",
+      caption: "Pequeno, simpático e cheio de estilo.",
+      image: "../images/posts/carro-10.jpg",
+      likes: 143,
+      comments: 6,
+    },
+    {
+      title: "Lamborghini amarelo",
+      caption: "Amarelo para chamar atenção.",
+      image: "../images/posts/carro-11.jpg",
+      likes: 468,
+      comments: 36,
+    },
+    {
+      title: "McLaren branco",
+      caption: "Aerodinâmica que dá gosto de ver.",
+      image: "../images/posts/carro-12.jpg",
+      likes: 291,
+      comments: 17,
+    },
   ];
   const events = [];
   const saved = [];
@@ -116,7 +188,10 @@ window.containersReady.then(() => {
   document
     .querySelector("#new-photo")
     .addEventListener("click", () =>
-      showInfo("Nova foto", "A criação de publicação ainda está em desenvolvimento."),
+      showInfo(
+        "Nova foto",
+        "A criação de publicação ainda está em desenvolvimento.",
+      ),
     );
 
   selectTab(tabs[0]);

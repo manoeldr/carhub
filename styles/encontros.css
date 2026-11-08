@@ -113,3 +113,12 @@
     height: 200px;
   }
 }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.linha-info .inline-icon {
+  margin-right: 4px;
+}

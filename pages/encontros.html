@@ -19,23 +19,33 @@
       <h1 class="sr-only">Encontros</h1>
 
       <section class="filtros" aria-label="Filtrar encontros">
-        <button class="chip" data-campo="cidade" data-valor="Caxias do Sul">📍 Caxias do Sul (50km)</button>
-        <button class="chip" data-campo="tipo" data-valor="Exposição">Exposição</button>
-        <button class="chip" data-campo="tipo" data-valor="Track Day">Track Day</button>
-        <button class="chip" data-campo="tipo" data-valor="Arrancada">Arrancada</button>
+        <button class="chip" data-campo="cidade" data-valor="Caxias do Sul">
+          <span class="inline-icon" data-icon="pin" aria-hidden="true"></span>
+          Caxias do Sul (50km)
+        </button>
+        <button class="chip" data-campo="tipo" data-valor="Exposição">
+          Exposição
+        </button>
+        <button class="chip" data-campo="tipo" data-valor="Track Day">
+          Track Day
+        </button>
+        <button class="chip" data-campo="tipo" data-valor="Arrancada">
+          Arrancada
+        </button>
         <button class="chip" data-campo="tipo" data-valor="Drift">Drift</button>
       </section>
 
       <section class="lista-eventos" id="lista-eventos"></section>
-      <p class="sem-eventos" id="sem-eventos" hidden>Nenhum encontro encontrado.</p>
+      <p class="sem-eventos" id="sem-eventos" hidden>
+        Nenhum encontro encontrado.
+      </p>
     </main>
 
-      <dialog id="info-dialog">
-        <button class="dialog-close icon-button" aria-label="Fechar">×</button>
-        <h2></h2>
-        <p></p>
-        </dialog>
-      <div class="toast" role="status" hidden></div>
-
+    <dialog id="info-dialog">
+      <button class="dialog-close icon-button" aria-label="Fechar">×</button>
+      <h2></h2>
+      <p></p>
+    </dialog>
+    <div class="toast" role="status" hidden></div>
   </body>
 </html>

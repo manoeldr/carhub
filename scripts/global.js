@@ -1,4 +1,10 @@
 const paths = {
+  pin: "M25 12c0 7-9 18-9 18S7 19 7 12a9 9 0 1 1 18 0ZM19 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0",
+  camera: "M3 9h6l3-5h8l3 5h6v20H3ZM23 18a7 7 0 1 1-14 0 7 7 0 0 1 14 0",
+  flag: "M5 30V3M5 4c8-6 14 6 23 0v15c-9 6-15-6-23 0M12 3v15M20 6v15M5 11c8-6 14 6 23 0",
+  flame:
+    "M17 2c2 8-5 9-4 15 2-1 4-3 5-5 5 5 10 9 7 15-4 7-17 5-19-2C3 16 13 12 17 2Z",
+
   menu: "M4 6h24M4 16h24M4 26h24",
   search: "m22 22 7 7M25 14a11 11 0 1 1-22 0 11 11 0 0 1 22 0",
   home: "m2 14 14-12 14 12h-5v15h-7v-10h-5v10H7V14Z",
@@ -21,6 +27,11 @@ const paths = {
 };
 window.icon = (name) =>
   `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="${paths[name] || paths.plus}"${name === "home" ? ' fill="currentColor"' : ""}/></svg>`;
+window.renderIcons = (root = document) => {
+  root.querySelectorAll("[data-icon]").forEach((element) => {
+    element.innerHTML = icon(element.dataset.icon);
+  });
+};
 const toast = document.querySelector(".toast");
 let toastTimer;
 window.notify = (text) => {

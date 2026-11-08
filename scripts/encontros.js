@@ -10,9 +10,12 @@ function salvar() {
 }
 
 function mostrar() {
-  const visiveis = eventos.filter((e) => !filtro || e[filtro.campo] === filtro.valor);
+  const visiveis = eventos.filter(
+    (e) => !filtro || e[filtro.campo] === filtro.valor,
+  );
 
-  const cartoes = visiveis.map((e) => `
+  const cartoes = visiveis.map(
+    (e) => `
     <article class="card-evento">
       <div class="capa">
         ${e.imagem ? `<img src="${e.imagem}" alt="Foto do evento ${e.titulo}">` : ""}
@@ -20,8 +23,8 @@ function mostrar() {
       </div>
       <h2>${e.titulo}</h2>
       <div class="linha-info">
-        <span>👤 ${e.autor} • 📍 ${e.local}</span>
-        <span class="vao">🔥 ${e.vao} vão!</span>
+        <span><span class="inline-icon" aria-hidden="true">${icon("user")}</span> ${e.autor} • <span class="inline-icon" aria-hidden="true">${icon("pin")}</span> ${e.local}</span>
+        <span class="vao"><span class="inline-icon" aria-hidden="true">${icon("flame")}</span> ${e.vao} vão!</span>
       </div>
       <div class="acoes">
         <button class="btn ${e.resposta === "vou" ? "ativo" : ""}" data-acao="vou" data-id="${e.id}">Vou</button>
@@ -30,7 +33,8 @@ function mostrar() {
         ${e.criado ? `<button class="btn" data-acao="excluir" data-id="${e.id}">Excluir</button>` : ""}
       </div>
     </article>
-  `);
+  `,
+  );
 
   lista.innerHTML = cartoes.join("");
   aviso.hidden = visiveis.length > 0;
@@ -46,7 +50,7 @@ function ligarBotoes() {
 }
 
 function agir(acao, id) {
-  const evento = eventos.filter((e) => e.id === id)[0]; 
+  const evento = eventos.filter((e) => e.id === id)[0];
   if (!evento) return;
 
   if (acao === "vou" || acao === "naovou") {
@@ -81,9 +85,12 @@ function excluir(id) {
 chips.forEach((chip) => {
   chip.addEventListener("click", () => {
     const mesmo = filtro && filtro.valor === chip.dataset.valor;
-    filtro = mesmo ? null : { campo: chip.dataset.campo, valor: chip.dataset.valor };
+    filtro = mesmo
+      ? null
+      : { campo: chip.dataset.campo, valor: chip.dataset.valor };
     chips.forEach((c) => {
-      c.className = filtro && c.dataset.valor === filtro.valor ? "chip ativo" : "chip";
+      c.className =
+        filtro && c.dataset.valor === filtro.valor ? "chip ativo" : "chip";
     });
     mostrar();
   });
