@@ -31,9 +31,11 @@ Acesse [http://localhost:5500](http://localhost:5500).
 - Busca por título, autor, legenda e tags.
 - Curtidas, comentários, favoritos e publicação com imagem, mantidos apenas durante a sessão da página.
 - Sidebar e topbar fixas, com menu recolhível.
-- Tela Tema com aparência escura, clara ou de acordo com o sistema. A preferência é salva no `localStorage` e aplicada às duas telas.
+- Tela Tema com aparência escura, clara ou de acordo com o sistema. A preferência é salva no `localStorage` e aplicada a todas as telas.
+- Tela Login com validação de e-mail/usuário e senha. Sem backend: ao validar, segue para a página Principal.
+- Tela Perfil com capa, estatísticas, abas (Fotos, Meus eventos, Salvos) e grade de fotos de demonstração.
 
-O projeto está em desenvolvimento. Encontros, criação completa de publicação, perfil e configurações aparecem no protótipo, mas suas telas ainda não foram implementadas. Não há backend, autenticação ou banco de dados. Dados de autores e interações do feed são fictícios. Avatares e fonte usam serviços externos e dependem de internet; as fotos dos posts estão no projeto.
+O projeto está em desenvolvimento. Encontros, criação completa de publicação e configurações aparecem no protótipo, mas suas telas ainda não foram implementadas. Não há backend, autenticação ou banco de dados. Dados de autores e interações do feed são fictícios. Avatares e fonte usam serviços externos e dependem de internet; as fotos dos posts estão no projeto.
 
 ## Organização
 
@@ -42,18 +44,24 @@ index.html                 # Entrada para a página Principal
 pages/
   principal.html           # Feed
   tema.html                # Preferência de aparência
+  login.html               # Acesso à conta
+  perfil.html              # Perfil do usuário
   containers/              # HTML da sidebar e topbar
 styles/
   main.css                 # Importações dos estilos compartilhados
   global.css               # Base visual e estilos compartilhados
   principal.css            # Estilos do feed
   tema.css                 # Estilos da tela Tema
+  login.css                # Estilos da tela Login
+  perfil.css               # Estilos da tela Perfil
   containers/              # CSS da sidebar e topbar
 scripts/
   main.js                  # Carregamento dos arquivos e da tela atual
   global.js                # Funções compartilhadas e preferência de tema
   principal.js             # Comportamento do feed
   tema.js                  # Controles de aparência
+  login.js                 # Validação do formulário de login
+  perfil.js                # Estatísticas, abas e grade do perfil
   containers/              # JavaScript da sidebar e topbar
 images/
   posts/                   # Fotografias do catálogo de demonstração
@@ -80,7 +88,11 @@ As imagens abaixo são **referências do Figma**, não capturas da implementaç�
 
 ![Referência de nova publicação](images/figma/nova-publicacao.png)
 
-### Perfil — planejado
+### Login
+
+[![Referência do login](https://github.com/manoeldr/carhub/raw/main/images/figma/login.png)](https://github.com/manoeldr/carhub/blob/main/images/figma/login.png)
+
+### Perfil
 
 ![Referência do perfil](images/figma/perfil.png)
 
