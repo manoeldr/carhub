@@ -14,9 +14,9 @@ window.containersReady.then(() => {
   const storageKey = "carhub-chats-v1";
   const contacts = [
     {
-      id: "gabriela",
-      name: "Gabriela Faraon",
-      avatar: 26,
+      id: "thais",
+      name: "Thais Martins",
+      avatar: 47,
       unread: 1,
       messages: [
         {
@@ -40,8 +40,8 @@ window.containersReady.then(() => {
       ],
     },
     {
-      id: "gabriel",
-      name: "Gabriel Santos",
+      id: "manoel",
+      name: "Manoel Antonio",
       avatar: 14,
       unread: 0,
       messages: [
@@ -56,7 +56,9 @@ window.containersReady.then(() => {
   try {
     const saved = JSON.parse(localStorage.getItem(storageKey));
     contacts.forEach((contact) => {
-      const stored = saved?.[contact.id];
+      // Mantém os históricos locais após a troca dos contatos de demonstração.
+      const previousId = { thais: "gabriela", manoel: "gabriel" }[contact.id];
+      const stored = saved?.[contact.id] || saved?.[previousId];
       if (!stored || !Array.isArray(stored.messages)) return;
       contact.messages = stored.messages
         .filter(

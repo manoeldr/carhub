@@ -298,8 +298,8 @@ window.containersReady.then(() => {
     const text = input.value.trim();
     if (!text) return;
     posts.unshift({
-      user: "voce",
-      avatar: 12,
+      user: "gbfaraon",
+      avatar: 26,
       time: "Agora",
       title: text,
       caption: "",
