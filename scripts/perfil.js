@@ -91,31 +91,76 @@ window.containersReady.then(() => {
       comments: 17,
     },
   ];
-  const events = [];
-  const saved = [];
-
+  let localPosts = [];
+  let events = [];
+  let mediaUrls = [];
+  let renderVersion = 0;
   const format = (number) => number.toLocaleString("pt-BR");
-  const stats = {
-    posts: photos.length,
-    events: events.length,
-    followers: profile.followers,
-    following: profile.following,
+  const readArray = (key) => {
+    try {
+      const data = JSON.parse(localStorage.getItem(key));
+      return Array.isArray(data) ? data : [];
+    } catch {
+      return [];
+    }
   };
-  Object.entries(stats).forEach(([key, value]) => {
-    document.querySelector(`[data-stat="${key}"]`).textContent = format(value);
-  });
-  document.querySelector('[data-count="photos"]').textContent = photos.length;
-  document.querySelector('[data-count="events"]').textContent = events.length;
-
+  const isOwner = (item) =>
+    item.autor === currentUser.username || item.autor === "seu.usuario";
+  function refreshData() {
+    localPosts = readArray("carhub-publicacoes").filter(isOwner).reverse();
+    events = readArray("carhub-eventos")
+      .filter((event) => event.criado && isOwner(event))
+      .reverse();
+    const stats = {
+      posts: photos.length + localPosts.length,
+      events: events.length,
+      ...profile,
+    };
+    Object.entries(stats).forEach(([key, value]) => {
+      document.querySelector(`[data-stat="${key}"]`).textContent =
+        format(value);
+    });
+    document.querySelector('[data-count="photos"]').textContent = stats.posts;
+    document.querySelector('[data-count="events"]').textContent = events.length;
+  }
+  function releaseMedia() {
+    mediaUrls.forEach((url) => URL.revokeObjectURL(url));
+    mediaUrls = [];
+  }
   const panel = document.querySelector("#tab-panel");
   const tabs = [...document.querySelectorAll('[role="tab"]')];
 
   const empty = (title, text) =>
     `<div class="panel-empty"><strong>${title}</strong>${text}</div>`;
 
-  function renderPhotos() {
+  async function renderPhotos() {
+    const version = renderVersion;
     panel.innerHTML = `<div class="photo-grid"></div>`;
     const grid = panel.firstElementChild;
+    const pendingMedia = [];
+    localPosts.forEach((post) => {
+      const card = document.createElement("article");
+      card.className = "profile-post";
+      const gallery = document.createElement("div");
+      gallery.className = "profile-post-media";
+      const heading = document.createElement("h2");
+      heading.textContent = post.veiculo || "Publicação de " + currentUser.name;
+      const caption = document.createElement("p");
+      caption.textContent = post.legenda;
+      const location = document.createElement("p");
+      location.className = "profile-post-location";
+      if (post.local) {
+        location.innerHTML = icon("pin");
+        location.append(document.createTextNode(post.local));
+      }
+      card.append(gallery, heading, caption, location);
+      grid.append(card);
+      if (post.quantidadeMidias) pendingMedia.push({ post, gallery });
+      else {
+        gallery.innerHTML = icon("image");
+        gallery.classList.add("no-media");
+      }
+    });
     photos.forEach((photo, index) => {
       const tile = document.createElement("button");
       tile.type = "button";
@@ -128,15 +173,72 @@ window.containersReady.then(() => {
       tile.innerHTML = `<img src="${photo.image}" alt="" loading="lazy"><span class="photo-stats"><span>${icon("heart")}${format(photo.likes)}</span><span>${icon("comment")}${format(photo.comments)}</span></span>`;
       grid.append(tile);
     });
+    for (const { post, gallery } of pendingMedia) {
+      try {
+        const record = await mediaRecord("get", post.id);
+        if (version !== renderVersion) return;
+        if (!record?.files?.length) throw new Error("Sem anexos");
+        record.files.forEach((file) => {
+          const video = file.type === "video/mp4";
+          const media = document.createElement(video ? "video" : "img");
+          const url = URL.createObjectURL(file);
+          mediaUrls.push(url);
+          media.src = url;
+          if (video) {
+            media.controls = true;
+            media.preload = "metadata";
+            media.playsInline = true;
+          } else {
+            media.alt = file.name || post.legenda;
+            media.loading = "lazy";
+          }
+          gallery.append(media);
+        });
+      } catch {
+        if (version !== renderVersion) return;
+        gallery.textContent = "Anexos indisponíveis neste navegador.";
+        gallery.classList.add("no-media");
+      }
+    }
   }
 
   const renderers = {
     photos: renderPhotos,
     events: () => {
-      panel.innerHTML = empty(
-        "Nenhum evento por enquanto",
-        "Os encontros em que você participar aparecem aqui.",
-      );
+      if (!events.length) {
+        panel.innerHTML = empty(
+          "Nenhum evento por enquanto",
+          "Os eventos que você criar aparecem aqui.",
+        );
+        return;
+      }
+      const grid = document.createElement("div");
+      grid.className = "profile-event-grid";
+      events.forEach((event) => {
+        const card = document.createElement("article");
+        card.className = "profile-event";
+        const date = document.createElement("p");
+        date.className = "profile-event-date";
+        date.innerHTML = icon("calendar");
+        date.append(document.createTextNode(`${event.dia} ${event.mes}`));
+        const title = document.createElement("h2");
+        title.textContent = event.titulo;
+        const location = document.createElement("p");
+        location.className = "profile-post-location";
+        location.innerHTML = icon("pin");
+        location.append(document.createTextNode(event.local));
+        const type = document.createElement("p");
+        type.textContent = event.tipo;
+        const attendance = document.createElement("p");
+        attendance.textContent = `${event.vao || 0} participantes confirmados`;
+        const link = document.createElement("a");
+        link.className = "button button-secondary";
+        link.href = "encontros.html";
+        link.textContent = "Ver encontros";
+        card.append(date, title, location, type, attendance, link);
+        grid.append(card);
+      });
+      panel.replaceChildren(grid);
     },
     saved: () => {
       panel.innerHTML = empty(
@@ -147,6 +249,9 @@ window.containersReady.then(() => {
   };
 
   function selectTab(tab, focus = false) {
+    ++renderVersion;
+    releaseMedia();
+    refreshData();
     tabs.forEach((item) => {
       const active = item === tab;
       item.setAttribute("aria-selected", String(active));
@@ -187,12 +292,23 @@ window.containersReady.then(() => {
     );
   document
     .querySelector("#new-photo")
-    .addEventListener("click", () =>
-      showInfo(
-        "Nova foto",
-        "A criação de publicação ainda está em desenvolvimento.",
-      ),
+    .addEventListener(
+      "click",
+      () => (window.location.href = "nova-publicacao.html"),
     );
 
+  const refresh = () =>
+    selectTab(
+      tabs.find((tab) => tab.getAttribute("aria-selected") === "true") ||
+        tabs[0],
+    );
+  window.addEventListener("storage", (event) => {
+    if (["carhub-publicacoes", "carhub-eventos", null].includes(event.key))
+      refresh();
+  });
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) refresh();
+  });
+  window.addEventListener("beforeunload", releaseMedia);
   selectTab(tabs[0]);
 });

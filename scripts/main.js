@@ -34,6 +34,8 @@ async function start() {
   renderIcons();
 
   const page = document.body.dataset.page;
+  if (["nova-publicacao", "perfil"].includes(page))
+    await loadScript("scripts/dados-publicacoes.js");
   if (page) await loadScript(`scripts/${page}.js`);
 }
 

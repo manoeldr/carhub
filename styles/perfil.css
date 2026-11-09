@@ -198,3 +198,78 @@
   justify-content: center;
   gap: 8px;
 }
+
+.profile-post,
+.profile-event {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+}
+.profile-post h2,
+.profile-event h2 {
+  font-size: 17px;
+  margin: 14px 0 8px;
+  overflow-wrap: anywhere;
+}
+.profile-post p,
+.profile-event p {
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.profile-post-media {
+  display: grid;
+  gap: 8px;
+}
+.profile-post-media img,
+.profile-post-media video {
+  width: 100%;
+  max-height: 260px;
+  display: block;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg);
+}
+.profile-post-media.no-media {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  background: var(--raised);
+  border-radius: 8px;
+  font-size: 13px;
+  padding: 14px;
+}
+.profile-post-media.no-media svg {
+  width: 32px;
+  height: 32px;
+}
+.profile-post-location,
+.profile-event-date {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+}
+.profile-post-location svg,
+.profile-event-date svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.profile-event-date {
+  color: var(--orange);
+}
+.profile-event-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+@media (max-width: 850px) {
+  .profile-event-grid {
+    grid-template-columns: 1fr;
+  }
+}
