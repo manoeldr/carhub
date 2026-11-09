@@ -169,7 +169,11 @@ window.containersReady.then(() => {
       article.className = "post";
       article.dataset.index = index;
       const photo = post.url || post.image || "";
-      article.innerHTML = `<header class="post-header"><img class="avatar" src="https://i.pravatar.cc/80?img=${post.avatar}" alt=""><div><p class="post-author">${escapeHTML(post.user)}</p><span class="post-time">${post.time}</span></div><button class="more icon-button" aria-label="Opções da publicação">···</button></header>${photo ? `<img class="post-photo" src="${escapeHTML(photo)}" alt="${escapeHTML(post.title)}" loading="lazy">` : ""}<div class="post-content"><h2>${escapeHTML(post.title)}</h2><p class="post-caption">${escapeHTML(post.caption)}</p><div class="tags">${post.tags.map((tag) => `<span class="tag">${escapeHTML(tag)}</span>`).join("")}</div><div class="post-actions"><button class="post-action like" aria-label="Curtir publicação" aria-pressed="${!post.unliked}">${icon("heart")}<span>${post.likes}</span></button><button class="post-action comment" aria-label="Comentar publicação">${icon("comment")}<span>${post.comments}</span></button><button class="post-action share" aria-label="Compartilhar publicação">${icon("send")}</button><button class="post-action bookmark" aria-label="Salvar publicação" aria-pressed="${!!post.saved}">${icon("bookmark")}</button></div><div class="comments"></div></div>`;
+      const ownPost = post.user === currentUser.username;
+      const postAvatar = ownPost
+        ? currentUser.avatar
+        : `https://i.pravatar.cc/80?img=${post.avatar}`;
+      article.innerHTML = `<header class="post-header"><img class="avatar" ${ownPost ? "data-user-avatar" : ""} src="${escapeHTML(postAvatar)}" alt="${ownPost ? "Foto de perfil de " + currentUser.name : ""}"><div><p class="post-author">${escapeHTML(post.user)}</p><span class="post-time">${post.time}</span></div><button class="more icon-button" aria-label="Opções da publicação">···</button></header>${photo ? `<img class="post-photo" src="${escapeHTML(photo)}" alt="${escapeHTML(post.title)}" loading="lazy">` : ""}<div class="post-content"><h2>${escapeHTML(post.title)}</h2><p class="post-caption">${escapeHTML(post.caption)}</p><div class="tags">${post.tags.map((tag) => `<span class="tag">${escapeHTML(tag)}</span>`).join("")}</div><div class="post-actions"><button class="post-action like" aria-label="Curtir publicação" aria-pressed="${!post.unliked}">${icon("heart")}<span>${post.likes}</span></button><button class="post-action comment" aria-label="Comentar publicação">${icon("comment")}<span>${post.comments}</span></button><button class="post-action share" aria-label="Compartilhar publicação">${icon("send")}</button><button class="post-action bookmark" aria-label="Salvar publicação" aria-pressed="${!!post.saved}">${icon("bookmark")}</button></div><div class="comments"></div></div>`;
       feed.append(article);
       (post.replies || []).forEach((text) => addReply(article, text));
     });
@@ -298,7 +302,7 @@ window.containersReady.then(() => {
     const text = input.value.trim();
     if (!text) return;
     posts.unshift({
-      user: "gbfaraon",
+      user: currentUser.username,
       avatar: 26,
       time: "Agora",
       title: text,

@@ -48,6 +48,10 @@ As publicações e os eventos criados pela Gabriela também aparecem no Perfil, 
 
 Para criar um evento, anexe uma foto: a primeira imagem selecionada será a capa, salva no IndexedDB e exibida em Encontros e em Perfil → Meus eventos. Eventos antigos sem capa usam uma imagem ilustrativa.
 
+## Edição de perfil
+
+Em Perfil → Editar perfil, é possível trocar a foto (PNG/JPG/WEBP de até 2 MB) e a descrição (até 240 caracteres). A identidade fica centralizada em `scripts/dados-usuario.js` e é salva neste navegador. O avatar é compartilhado pelo Perfil, topbar, compositor do feed, posts próprios e Nova publicação; alterações também são sincronizadas entre abas abertas do mesmo site. Cancelar descarta a edição.
+
 ## Chats
 
 Painel flutuante fixo no canto inferior direito, disponível nas telas Principal, Encontros, Criar publicação e Perfil. Não aparece em Tema, Configurações ou Login. Permite buscar conversas, abrir uma conversa, enviar mensagens locais e minimizar ou fechar o painel. O histórico (até 100 mensagens por conversa) e a leitura das conversas são salvos neste navegador. Os contatos e mensagens recebidas são fictícios; não há comunicação entre usuários nem envio por servidor.

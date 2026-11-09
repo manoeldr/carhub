@@ -16,6 +16,7 @@ async function loadScript(path) {
 }
 
 async function start() {
+  await loadScript("scripts/dados-usuario.js");
   await loadScript("scripts/global.js");
   window.containersReady = window.loadContainers(projectRoot);
   await window.containersReady;
@@ -32,6 +33,7 @@ async function start() {
     await loadScript("scripts/containers/footer.js");
 
   renderIcons();
+  syncCurrentUser();
 
   const page = document.body.dataset.page;
   if (["nova-publicacao", "perfil", "encontros"].includes(page))

@@ -301,11 +301,94 @@ window.containersReady.then(() => {
     showInfo(photo.title, photo.caption);
   });
 
+  const editor = document.querySelector("#edit-profile-dialog");
+  const editForm = document.querySelector("#edit-profile-form");
+  const photoInput = document.querySelector("#profile-photo-input");
+  const photoPreview = document.querySelector("#profile-photo-preview");
+  const description = document.querySelector("#profile-description");
+  const saveProfile = document.querySelector("#save-profile-editor");
+  const editorError = document.querySelector("#profile-editor-error");
+  let draftAvatar = currentUser.avatar;
+  let photoReadVersion = 0;
+  const updateDescriptionCount = () => {
+    document.querySelector("#profile-description-count").textContent =
+      `${description.value.length}/240 caracteres`;
+  };
+  document.querySelector("#edit-profile").addEventListener("click", () => {
+    draftAvatar = currentUser.avatar;
+    photoPreview.src = draftAvatar;
+    description.value = currentUser.bio;
+    photoInput.value = "";
+    editorError.hidden = true;
+    saveProfile.disabled = false;
+    updateDescriptionCount();
+    editor.showModal();
+  });
+  ["#close-profile-editor", "#cancel-profile-editor"].forEach((selector) => {
+    document
+      .querySelector(selector)
+      .addEventListener("click", () => editor.close());
+  });
+  editor.addEventListener("close", () => {
+    ++photoReadVersion;
+  });
+  description.addEventListener("input", updateDescriptionCount);
   document
-    .querySelector("#edit-profile")
-    .addEventListener("click", () =>
-      showInfo("Editar perfil", "Esta tela ainda está em desenvolvimento."),
-    );
+    .querySelector("#choose-profile-photo")
+    .addEventListener("click", () => photoInput.click());
+  photoInput.addEventListener("change", async () => {
+    const file = photoInput.files[0];
+    if (!file) return;
+    const version = ++photoReadVersion;
+    editorError.hidden = true;
+    saveProfile.disabled = false;
+    if (
+      !["image/png", "image/jpeg", "image/webp"].includes(file.type) ||
+      file.size > 2 * 1024 * 1024
+    ) {
+      editorError.textContent =
+        "Escolha uma foto PNG, JPG ou WEBP de até 2 MB.";
+      editorError.hidden = false;
+      photoInput.value = "";
+      return;
+    }
+    saveProfile.disabled = true;
+    try {
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+      const image = new Image();
+      image.src = dataUrl;
+      await image.decode();
+      if (version !== photoReadVersion || !editor.open) return;
+      draftAvatar = dataUrl;
+      photoPreview.src = dataUrl;
+    } catch {
+      if (version !== photoReadVersion || !editor.open) return;
+      editorError.textContent =
+        "Não foi possível abrir essa imagem. Tente outra foto.";
+      editorError.hidden = false;
+    } finally {
+      if (version === photoReadVersion) saveProfile.disabled = false;
+      photoInput.value = "";
+    }
+  });
+  editForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (saveProfile.disabled) return;
+    try {
+      updateCurrentUser({ avatar: draftAvatar, bio: description.value.trim() });
+      editor.close();
+      notify("Perfil atualizado em todas as telas!");
+    } catch {
+      editorError.textContent =
+        "Não foi possível salvar o perfil. Verifique o espaço do navegador ou escolha uma foto menor.";
+      editorError.hidden = false;
+    }
+  });
   document
     .querySelector("#new-photo")
     .addEventListener(

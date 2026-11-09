@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#080e10" />
     <title>CarHub | Perfil</title>
-    <link rel="stylesheet" href="../styles/main.css?v=20261109-capas-sync" />
+    <link rel="stylesheet" href="../styles/main.css?v=20261109-edit-profile" />
     <link
       rel="stylesheet"
-      href="../styles/perfil.css?v=20261109-capas-sync"
+      href="../styles/perfil.css?v=20261109-edit-profile"
     />
-    <script src="../scripts/main.js?v=20261109-capas-sync" defer></script>
+    <script src="../scripts/main.js?v=20261109-edit-profile" defer></script>
   </head>
   <body data-page="perfil">
     <div data-container="topbar"></div>
@@ -22,11 +22,12 @@
         <div class="profile-info">
           <img
             class="profile-avatar"
+            data-user-avatar
             src="https://i.pravatar.cc/240?img=26"
             alt="Foto de perfil de Gabriela Faraon"
           />
           <div class="profile-identity">
-            <h1 class="profile-name">Gabriela Faraon</h1>
+            <h1 class="profile-name" data-user-name>Gabriela Faraon</h1>
             <p class="profile-meta">
               @gbfaraon •
               <span
@@ -36,7 +37,7 @@
               ></span>
               Caxias do Sul, RS
             </p>
-            <p class="profile-bio">
+            <p class="profile-bio" data-user-bio>
               Fotografia automotiva, encontros e cobertura de trackdays
               <span
                 class="inline-icon"
@@ -119,6 +120,73 @@
       <section id="tab-panel" role="tabpanel" tabindex="0"></section>
     </main>
     <div data-container="footer"></div>
+    <dialog
+      id="edit-profile-dialog"
+      class="profile-editor"
+      aria-labelledby="edit-profile-title"
+    >
+      <header class="profile-editor-header">
+        <h2 id="edit-profile-title">Editar perfil</h2>
+        <button
+          type="button"
+          class="icon-button"
+          id="close-profile-editor"
+          aria-label="Fechar edição do perfil"
+          data-icon="close"
+        ></button>
+      </header>
+      <form id="edit-profile-form">
+        <div class="profile-editor-photo">
+          <img
+            id="profile-photo-preview"
+            class="profile-editor-avatar"
+            alt="Prévia da foto de perfil"
+          />
+          <div>
+            <button
+              type="button"
+              class="button button-secondary"
+              id="choose-profile-photo"
+            >
+              Alterar foto
+            </button>
+            <p>PNG, JPG ou WEBP · até 2 MB</p>
+          </div>
+          <input
+            type="file"
+            id="profile-photo-input"
+            accept="image/png,image/jpeg,image/webp"
+            hidden
+          />
+        </div>
+        <label for="profile-description">Descrição do perfil</label>
+        <textarea
+          id="profile-description"
+          rows="4"
+          maxlength="240"
+          placeholder="Conte um pouco sobre você e sua paixão por carros."
+        ></textarea>
+        <p id="profile-description-count" class="profile-editor-hint">
+          0/240 caracteres
+        </p>
+        <p id="profile-editor-error" role="alert" hidden></p>
+        <div class="profile-editor-actions">
+          <button
+            type="button"
+            class="button button-secondary"
+            id="cancel-profile-editor"
+          >
+            Cancelar</button
+          ><button
+            type="submit"
+            class="button button-primary"
+            id="save-profile-editor"
+          >
+            Salvar alterações
+          </button>
+        </div>
+      </form>
+    </dialog>
     <dialog id="info-dialog">
       <button class="dialog-close icon-button" aria-label="Fechar">×</button>
       <h2></h2>
