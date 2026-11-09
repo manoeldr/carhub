@@ -88,7 +88,9 @@ window.loadContainers = (projectRoot) =>
           .querySelectorAll('a[href="principal.html"], a[data-page-link]')
           .forEach((link) => {
             const page = link.dataset.pageLink || "principal";
-            link.href = new URL(`pages/${page}.html`, projectRoot).href;
+            const pageUrl = new URL(`pages/${page}.html`, projectRoot);
+            if (assetVersion) pageUrl.searchParams.set("v", assetVersion);
+            link.href = pageUrl.href;
           });
       },
     ),

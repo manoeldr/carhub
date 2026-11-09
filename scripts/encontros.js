@@ -6,9 +6,27 @@ let eventos = carregarEventos();
 let filtro = null;
 let coverUrls = [];
 let coverVersion = 0;
-window.addEventListener("beforeunload", () =>
+const refreshEvents = () => {
+  eventos = carregarEventos();
+  mostrar();
+};
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) refreshEvents();
+});
+window.addEventListener("storage", (event) => {
+  if (event.key === "carhub-eventos" || event.key === null) refreshEvents();
+});
+window.addEventListener("pagehide", () =>
   coverUrls.forEach((url) => URL.revokeObjectURL(url)),
 );
+const escapeEvent = (value) =>
+  String(value ?? "").replace(
+    /[&<>"']/g,
+    (char) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        char
+      ],
+  );
 
 function salvar() {
   salvarEventos(eventos);
@@ -26,11 +44,12 @@ function mostrar() {
     (e) => `
     <article class="card-evento">
       <div class="capa" data-capa-id="${e.id}">
-        <div class="data"><strong>${e.dia}</strong><span>${e.mes}</span></div>
+        <img src="${escapeEvent(e.imagem || (e.tipo === "Drift" ? "../images/eventos/evento2.png" : "../images/eventos/evento1.png"))}" alt="${escapeEvent(e.imagem ? "Foto do evento " + e.titulo : "Capa ilustrativa de encontro automotivo")}">
+        <div class="data"><strong>${escapeEvent(e.dia)}</strong><span>${escapeEvent(e.mes)}</span></div>
       </div>
-      <h2>${e.titulo}</h2>
+      <h2>${escapeEvent(e.titulo)}</h2>
       <div class="linha-info">
-        <span><span class="inline-icon" aria-hidden="true">${icon("user")}</span> ${e.autor} • <span class="inline-icon" aria-hidden="true">${icon("pin")}</span> ${e.local}</span>
+        <span><span class="inline-icon" aria-hidden="true">${icon("user")}</span> ${escapeEvent(e.autor)} • <span class="inline-icon" aria-hidden="true">${icon("pin")}</span> ${escapeEvent(e.local)}</span>
         <span class="vao"><span class="inline-icon" aria-hidden="true">${icon("flame")}</span> ${e.vao} vão!</span>
       </div>
       <div class="acoes">
@@ -58,11 +77,10 @@ function mostrar() {
       return;
     }
     if (cover.temporary) coverUrls.push(cover.src);
-    const image = document.createElement("img");
+    const image = target.querySelector("img");
     image.src = cover.src;
     image.alt = cover.alt;
-    image.loading = "lazy";
-    target.prepend(image);
+    image.loading = "eager";
   });
 }
 
