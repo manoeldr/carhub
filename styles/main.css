@@ -1,6 +1,6 @@
 /* Estilos compartilhados e componentes presentes nas telas. */
-@import url("./global.css?v=20261109-edit-profile");
-@import url("./containers/topbar.css?v=20261109-edit-profile");
-@import url("./containers/sidebar.css?v=20261109-edit-profile");
-@import url("./containers/chats.css?v=20261109-edit-profile");
-@import url("./containers/footer.css?v=20261109-edit-profile");
+@import url("./global.css?v=20261109-gear");
+@import url("./containers/topbar.css?v=20261109-gear");
+@import url("./containers/sidebar.css?v=20261109-gear");
+@import url("./containers/chats.css?v=20261109-gear");
+@import url("./containers/footer.css?v=20261109-gear");
