@@ -4,12 +4,20 @@ const chips = document.querySelectorAll(".chip");
 
 let eventos = carregarEventos();
 let filtro = null;
+let coverUrls = [];
+let coverVersion = 0;
+window.addEventListener("beforeunload", () =>
+  coverUrls.forEach((url) => URL.revokeObjectURL(url)),
+);
 
 function salvar() {
   salvarEventos(eventos);
 }
 
 function mostrar() {
+  const version = ++coverVersion;
+  coverUrls.forEach((url) => URL.revokeObjectURL(url));
+  coverUrls = [];
   const visiveis = eventos.filter(
     (e) => !filtro || e[filtro.campo] === filtro.valor,
   );
@@ -17,8 +25,7 @@ function mostrar() {
   const cartoes = visiveis.map(
     (e) => `
     <article class="card-evento">
-      <div class="capa">
-        ${e.imagem ? `<img src="${e.imagem}" alt="Foto do evento ${e.titulo}">` : ""}
+      <div class="capa" data-capa-id="${e.id}">
         <div class="data"><strong>${e.dia}</strong><span>${e.mes}</span></div>
       </div>
       <h2>${e.titulo}</h2>
@@ -39,6 +46,24 @@ function mostrar() {
   lista.innerHTML = cartoes.join("");
   aviso.hidden = visiveis.length > 0;
   ligarBotoes();
+  visiveis.forEach(async (event) => {
+    const cover = await eventCover(event);
+    if (version !== coverVersion) {
+      if (cover.temporary) URL.revokeObjectURL(cover.src);
+      return;
+    }
+    const target = lista.querySelector(`[data-capa-id="${event.id}"]`);
+    if (!target) {
+      if (cover.temporary) URL.revokeObjectURL(cover.src);
+      return;
+    }
+    if (cover.temporary) coverUrls.push(cover.src);
+    const image = document.createElement("img");
+    image.src = cover.src;
+    image.alt = cover.alt;
+    image.loading = "lazy";
+    target.prepend(image);
+  });
 }
 
 function ligarBotoes() {
@@ -76,6 +101,8 @@ function responder(evento, nova) {
 }
 
 function excluir(id) {
+  const removed = eventos.find((event) => event.id === id);
+  if (removed?.capaId) mediaRecord("delete", removed.capaId).catch(() => {});
   eventos = eventos.filter((e) => e.id !== id);
   salvar();
   mostrar();

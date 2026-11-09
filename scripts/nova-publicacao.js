@@ -41,6 +41,7 @@ function novoId() {
 }
 
 function trocarAba(mostrarEvento) {
+  document.querySelector("#dica-capa-evento").hidden = !mostrarEvento;
   formPost.hidden = mostrarEvento;
   formEvento.hidden = !mostrarEvento;
   abaPost.className = mostrarEvento ? "aba" : "aba ativa";
@@ -205,9 +206,15 @@ formPost.addEventListener("submit", async (event) => {
   }
 });
 
-formEvento.addEventListener("submit", (e) => {
+formEvento.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  if (publishing) return;
+  const cover = selectedFiles.find((file) => file.type.startsWith("image/"));
+  if (!cover) {
+    notify("Adicione uma foto PNG ou JPG para a capa do evento.");
+    return;
+  }
   const partes = document.querySelector("#ev-data").value.split("-");
   let tipo = "";
   document.querySelectorAll('input[name="tipo"]').forEach((r) => {
@@ -229,11 +236,36 @@ formEvento.addEventListener("submit", (e) => {
     criado: true,
   };
 
-  const eventos = carregarEventos();
-  eventos.push(evento);
-  salvarEventos(eventos);
-  formEvento.reset();
-  notify("Evento criado! Veja na tela Encontros.");
+  evento.capaId = "evento-" + evento.id;
+  publishing = true;
+  const button = formEvento.querySelector('[type="submit"]');
+  button.disabled = true;
+  button.textContent = "Salvando evento...";
+  let coverSaved = false;
+  try {
+    await mediaRecord("put", { id: evento.capaId, files: [cover] });
+    coverSaved = true;
+    const eventos = carregarEventos();
+    salvarEventos([...eventos, evento]);
+    formEvento.reset();
+    selectedFiles = [];
+    renderSelectedFiles();
+    notify("Evento criado com foto! Veja em Encontros e no Perfil.");
+  } catch {
+    if (coverSaved) {
+      try {
+        await mediaRecord("delete", evento.capaId);
+      } catch {}
+    }
+    notify(
+      "Não foi possível salvar o evento. Verifique o espaço do navegador e tente novamente.",
+    );
+  } finally {
+    publishing = false;
+    button.disabled = false;
+    button.textContent = "Publicar evento";
+    renderSelectedFiles();
+  }
 });
 
 async function mostrarPosts() {

@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#080e10" />
     <title>CarHub | Nova publicação</title>
-    <link rel="stylesheet" href="../styles/main.css?v=20261109-profile-posts" />
+    <link rel="stylesheet" href="../styles/main.css?v=20261109-capas" />
     <link
       rel="stylesheet"
-      href="../styles/nova-publicacao.css?v=20261109-profile-posts"
+      href="../styles/nova-publicacao.css?v=20261109-capas"
     />
-    <script src="../scripts/dados-eventos.js"></script>
-    <script src="../scripts/main.js?v=20261109-profile-posts" defer></script>
+    <script src="../scripts/dados-eventos.js?v=20261109-capas"></script>
+    <script src="../scripts/main.js?v=20261109-capas" defer></script>
   </head>
 
   <body data-page="nova-publicacao">
@@ -115,6 +115,10 @@
           </form>
 
           <form id="form-evento" hidden>
+            <p id="dica-capa-evento" class="dica-capa" hidden>
+              Adicione uma foto na área de anexos. A primeira foto será a capa
+              do evento.
+            </p>
             <label for="ev-titulo">Nome do evento</label>
             <input
               type="text"

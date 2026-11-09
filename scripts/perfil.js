@@ -204,7 +204,8 @@ window.containersReady.then(() => {
 
   const renderers = {
     photos: renderPhotos,
-    events: () => {
+    events: async () => {
+      const version = renderVersion;
       if (!events.length) {
         panel.innerHTML = empty(
           "Nenhum evento por enquanto",
@@ -214,6 +215,7 @@ window.containersReady.then(() => {
       }
       const grid = document.createElement("div");
       grid.className = "profile-event-grid";
+      const pendingCovers = [];
       events.forEach((event) => {
         const card = document.createElement("article");
         card.className = "profile-event";
@@ -235,10 +237,24 @@ window.containersReady.then(() => {
         link.className = "button button-secondary";
         link.href = "encontros.html";
         link.textContent = "Ver encontros";
-        card.append(date, title, location, type, attendance, link);
+        const cover = document.createElement("img");
+        cover.className = "profile-event-cover";
+        cover.loading = "lazy";
+        card.append(cover, date, title, location, type, attendance, link);
+        pendingCovers.push({ event, cover });
         grid.append(card);
       });
       panel.replaceChildren(grid);
+      for (const { event, cover } of pendingCovers) {
+        const resolved = await eventCover(event);
+        if (version !== renderVersion) {
+          if (resolved.temporary) URL.revokeObjectURL(resolved.src);
+          return;
+        }
+        if (resolved.temporary) mediaUrls.push(resolved.src);
+        cover.src = resolved.src;
+        cover.alt = resolved.alt;
+      }
     },
     saved: () => {
       panel.innerHTML = empty(

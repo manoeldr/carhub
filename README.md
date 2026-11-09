@@ -46,6 +46,8 @@ Os arquivos ficam apenas neste navegador e dispositivo, sujeitos ao espaço disp
 
 As publicações e os eventos criados pela Gabriela também aparecem no Perfil, com contadores atualizados. As publicações locais são exibidas antes das fotos de demonstração, incluindo os anexos armazenados no IndexedDB.
 
+Para criar um evento, anexe uma foto: a primeira imagem selecionada será a capa, salva no IndexedDB e exibida em Encontros e em Perfil → Meus eventos. Eventos antigos sem capa usam uma imagem ilustrativa.
+
 ## Chats
 
 Painel flutuante fixo no canto inferior direito, disponível nas telas Principal, Encontros, Criar publicação e Perfil. Não aparece em Tema, Configurações ou Login. Permite buscar conversas, abrir uma conversa, enviar mensagens locais e minimizar ou fechar o painel. O histórico (até 100 mensagens por conversa) e a leitura das conversas são salvos neste navegador. Os contatos e mensagens recebidas são fictícios; não há comunicação entre usuários nem envio por servidor.

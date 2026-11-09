@@ -33,3 +33,32 @@
     });
   };
 })();
+
+// Uma única resolução de capa para a lista de encontros e o perfil.
+window.eventCover = async (event) => {
+  if (event.capaId) {
+    try {
+      const record = await mediaRecord("get", event.capaId);
+      const photo = record?.files?.find((file) =>
+        file.type.startsWith("image/"),
+      );
+      if (photo)
+        return {
+          src: URL.createObjectURL(photo),
+          temporary: true,
+          alt: "Foto do evento " + event.titulo,
+        };
+    } catch {}
+  }
+  return {
+    src:
+      event.imagem ||
+      (event.tipo === "Drift"
+        ? "../images/eventos/evento2.png"
+        : "../images/eventos/evento1.png"),
+    temporary: false,
+    alt: event.imagem
+      ? "Foto do evento " + event.titulo
+      : "Capa ilustrativa de encontro automotivo",
+  };
+};

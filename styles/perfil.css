@@ -273,3 +273,12 @@
     grid-template-columns: 1fr;
   }
 }
+
+.profile-event-cover {
+  width: 100%;
+  aspect-ratio: 2;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+  background: var(--raised);
+}

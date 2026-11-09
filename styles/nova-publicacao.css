@@ -276,3 +276,10 @@ fieldset label {
     flex: 1;
   }
 }
+
+.dica-capa {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
