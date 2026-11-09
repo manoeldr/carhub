@@ -24,7 +24,7 @@ Object.keys(caixas).forEach((chave) => {
 });
 
 document.querySelector("#btn-senha").addEventListener("click", () => {
-  showInfo("Alterar senha");
+  showInfo("Alterar senha", "Um link para alteração de senha foi enviado para o seu email.");
 });
 
 document.querySelector("#btn-sair").addEventListener("click", () => {
