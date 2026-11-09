@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#080e10" />
     <title>CarHub | Nova publicação</title>
-    <link rel="stylesheet" href="../styles/main.css?v=20261108-sidebar" />
-    <link rel="stylesheet" href="../styles/nova-publicacao.css?v=20261108-sidebar" />
+    <link rel="stylesheet" href="../styles/main.css?v=20261109-media" />
+    <link
+      rel="stylesheet"
+      href="../styles/nova-publicacao.css?v=20261109-media"
+    />
     <script src="../scripts/dados-eventos.js"></script>
-    <script src="../scripts/main.js?v=20261108-sidebar" defer></script>
+    <script src="../scripts/main.js?v=20261109-media" defer></script>
   </head>
 
   <body data-page="nova-publicacao">
@@ -28,10 +31,27 @@
       </section>
 
       <div class="colunas">
-        <section class="area-midia">
+        <section
+          class="area-midia"
+          id="area-midia"
+          aria-label="Anexar fotos e vídeos"
+        >
           <div class="icone-camera" aria-hidden="true" data-icon="camera"></div>
           <h2>Arraste suas fotos ou vídeos aqui</h2>
-          <p>Suporta PNG, JPG e MP4 (Até 10 arquivos)</p>
+          <p>PNG, JPG e MP4 · até 10 arquivos de 25 MB cada</p>
+          <input
+            type="file"
+            id="arquivos-publicacao"
+            accept="image/png,image/jpeg,video/mp4"
+            multiple
+            hidden
+          />
+          <div
+            class="midias-previas"
+            id="midias-previas"
+            aria-label="Arquivos selecionados"
+          ></div>
+          <p id="status-midias" role="status" aria-live="polite"></p>
           <button type="button" class="btn-escuro" id="btn-arquivo">
             Selecionar arquivo
           </button>
@@ -39,9 +59,14 @@
 
         <section class="painel-form">
           <div class="usuario">
-            <div class="avatar-nova" aria-hidden="true" data-icon="user"></div>
+            <img
+              class="avatar-nova"
+              id="autor-avatar"
+              src="https://i.pravatar.cc/80?img=26"
+              alt="Foto de perfil de Gabriela Faraon"
+            />
             <div>
-              <strong>seu.usuario</strong>
+              <strong id="autor-usuario">@gbfaraon</strong>
               <p>Publicando no CarHub</p>
             </div>
           </div>

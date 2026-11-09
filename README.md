@@ -38,6 +38,12 @@ Acesse [http://localhost:5500](http://localhost:5500).
 
 O projeto está em desenvolvimento. Encontros, criação completa de publicação e configurações aparecem no protótipo, mas suas telas ainda não foram implementadas. Não há backend, autenticação ou banco de dados. Dados de autores e interações do feed são fictícios. Avatares e fonte usam serviços externos e dependem de internet; as fotos dos posts estão no projeto.
 
+## Publicações com mídia
+
+A tela Nova publicação usa a identidade de demonstração da Gabriela (`@gbfaraon`) e permite selecionar ou arrastar até 10 fotos PNG/JPG e vídeos MP4, com até 25 MB por arquivo. É possível visualizar e remover anexos antes de publicar. As mídias são salvas localmente no IndexedDB e reaparecem em “Suas publicações” após recarregar a tela. A legenda e os demais dados continuam no `localStorage`.
+
+Os arquivos ficam apenas neste navegador e dispositivo, sujeitos ao espaço disponível e à limpeza dos dados do site; não são enviados a um servidor.
+
 ## Chats
 
 Painel flutuante fixo no canto inferior direito, disponível nas telas Principal, Encontros, Criar publicação e Perfil. Não aparece em Tema, Configurações ou Login. Permite buscar conversas, abrir uma conversa, enviar mensagens locais e minimizar ou fechar o painel. O histórico (até 100 mensagens por conversa) e a leitura das conversas são salvos neste navegador. Os contatos e mensagens recebidas são fictícios; não há comunicação entre usuários nem envio por servidor.

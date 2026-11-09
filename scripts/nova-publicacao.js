@@ -1,7 +1,29 @@
 const CHAVE_POSTS = "carhub-publicacoes";
-let posts = JSON.parse(localStorage.getItem(CHAVE_POSTS)) || [];
+let posts = [];
+try {
+  const saved = JSON.parse(localStorage.getItem(CHAVE_POSTS));
+  if (Array.isArray(saved)) posts = saved;
+} catch {}
+const author = window.currentUser;
+document.querySelector("#autor-usuario").textContent = "@" + author.username;
+document.querySelector("#autor-avatar").src = author.avatar;
+document.querySelector("#autor-avatar").alt =
+  "Foto de perfil de " + author.name;
 
-const meses = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+const meses = [
+  "JAN",
+  "FEV",
+  "MAR",
+  "ABR",
+  "MAI",
+  "JUN",
+  "JUL",
+  "AGO",
+  "SET",
+  "OUT",
+  "NOV",
+  "DEZ",
+];
 
 const abaPost = document.querySelector("#aba-post");
 const abaEvento = document.querySelector("#aba-evento");
@@ -15,7 +37,7 @@ function salvarPosts() {
 }
 
 function novoId() {
-  return Math.floor(Math.random() * 1000000000);
+  return Date.now() * 1000 + Math.floor(Math.random() * 1000);
 }
 
 function trocarAba(mostrarEvento) {
@@ -27,25 +49,192 @@ function trocarAba(mostrarEvento) {
 abaPost.addEventListener("click", () => trocarAba(false));
 abaEvento.addEventListener("click", () => trocarAba(true));
 
-document.querySelector("#btn-arquivo").addEventListener("click", () => {
-  notify("O envio de arquivos fica para uma próxima versão.");
+const fileInput = document.querySelector("#arquivos-publicacao");
+const dropArea = document.querySelector("#area-midia");
+const preview = document.querySelector("#midias-previas");
+const mediaStatus = document.querySelector("#status-midias");
+let selectedFiles = [];
+let previewUrls = [];
+let postUrls = [];
+let renderVersion = 0;
+let database;
+let publishing = false;
+
+// Guarda os arquivos binários no IndexedDB, evitando o limite reduzido do localStorage.
+function mediaDatabase() {
+  if (!database)
+    database = new Promise((resolve, reject) => {
+      const request = indexedDB.open("carhub-midias", 1);
+      request.onupgradeneeded = () =>
+        request.result.createObjectStore("publicacoes", { keyPath: "id" });
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+      request.onblocked = () => reject(new Error("Armazenamento bloqueado."));
+    }).catch((error) => {
+      database = null;
+      throw error;
+    });
+  return database;
+}
+async function mediaRecord(action, value) {
+  const db = await mediaDatabase();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(
+      "publicacoes",
+      action === "get" ? "readonly" : "readwrite",
+    );
+    const store = transaction.objectStore("publicacoes");
+    const request = store[action](value);
+    transaction.oncomplete = () => resolve(request.result);
+    transaction.onerror = () => reject(transaction.error || request.error);
+    transaction.onabort = () =>
+      reject(transaction.error || new Error("Operação cancelada."));
+  });
+}
+function mediaElement(file, urls) {
+  const media = document.createElement(
+    file.type === "video/mp4" ? "video" : "img",
+  );
+  const url = URL.createObjectURL(file);
+  urls.push(url);
+  media.src = url;
+  if (media.tagName === "VIDEO") {
+    media.controls = true;
+    media.preload = "metadata";
+    media.playsInline = true;
+  } else media.alt = file.name || "Foto da publicação";
+  return media;
+}
+function renderSelectedFiles() {
+  previewUrls.forEach((url) => URL.revokeObjectURL(url));
+  previewUrls = [];
+  preview.replaceChildren();
+  selectedFiles.forEach((file, index) => {
+    const item = document.createElement("figure");
+    const caption = document.createElement("figcaption");
+    caption.textContent = file.name;
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "remover-midia icon-button";
+    remove.setAttribute("aria-label", "Remover " + file.name);
+    remove.innerHTML = icon("close");
+    remove.disabled = publishing;
+    remove.addEventListener("click", () => {
+      selectedFiles.splice(index, 1);
+      renderSelectedFiles();
+    });
+    item.append(mediaElement(file, previewUrls), caption, remove);
+    preview.append(item);
+  });
+  mediaStatus.textContent = selectedFiles.length
+    ? `${selectedFiles.length} de 10 arquivos selecionados. Salvos no navegador ao publicar.`
+    : "";
+}
+function addFiles(files) {
+  if (publishing) return;
+  const errors = [];
+  for (const file of files) {
+    if (!["image/png", "image/jpeg", "video/mp4"].includes(file.type)) {
+      errors.push(`${file.name}: formato não suportado.`);
+      continue;
+    }
+    if (file.size > 25 * 1024 * 1024) {
+      errors.push(`${file.name}: excede 25 MB.`);
+      continue;
+    }
+    if (
+      selectedFiles.some(
+        (item) =>
+          item.name === file.name &&
+          item.size === file.size &&
+          item.lastModified === file.lastModified,
+      )
+    )
+      continue;
+    if (selectedFiles.length >= 10) {
+      errors.push("Limite de 10 arquivos atingido.");
+      break;
+    }
+    selectedFiles.push(file);
+  }
+  renderSelectedFiles();
+  if (errors.length) mediaStatus.textContent = errors.join(" ");
+}
+document
+  .querySelector("#btn-arquivo")
+  .addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", () => {
+  addFiles(fileInput.files);
+  fileInput.value = "";
+});
+["dragenter", "dragover"].forEach((name) =>
+  dropArea.addEventListener(name, (event) => {
+    event.preventDefault();
+    dropArea.classList.add("arrastando");
+  }),
+);
+dropArea.addEventListener("dragleave", (event) => {
+  if (!dropArea.contains(event.relatedTarget))
+    dropArea.classList.remove("arrastando");
+});
+dropArea.addEventListener("drop", (event) => {
+  event.preventDefault();
+  dropArea.classList.remove("arrastando");
+  addFiles(event.dataTransfer.files);
 });
 
-formPost.addEventListener("submit", (e) => {
-  e.preventDefault();
+formPost.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (publishing) return;
+  const legenda = document.querySelector("#legenda").value.trim();
+  if (!legenda) return;
   const post = {
     id: novoId(),
-    legenda: document.querySelector("#legenda").value,
-    veiculo: document.querySelector("#veiculo").value,
-    local: document.querySelector("#local").value,
-    marca: document.querySelector("#marca").value,
-    autor: "seu.usuario",
+    legenda,
+    veiculo: document.querySelector("#veiculo").value.trim(),
+    local: document.querySelector("#local").value.trim(),
+    marca: document.querySelector("#marca").value.trim(),
+    autor: author.username,
+    avatar: author.avatar,
+    quantidadeMidias: selectedFiles.length,
   };
-  posts.push(post);
-  salvarPosts();
-  formPost.reset();
-  mostrarPosts();
-  notify("Publicação criada!");
+  publishing = true;
+  const submit = formPost.querySelector('[type="submit"]');
+  submit.disabled = true;
+  submit.textContent = "Salvando publicação...";
+  fileInput.disabled = true;
+  document.querySelector("#btn-arquivo").disabled = true;
+  renderSelectedFiles();
+  let mediaSaved = false;
+  try {
+    if (selectedFiles.length) {
+      await mediaRecord("put", { id: post.id, files: selectedFiles });
+      mediaSaved = true;
+    }
+    localStorage.setItem(CHAVE_POSTS, JSON.stringify([...posts, post]));
+    posts.push(post);
+    selectedFiles = [];
+    formPost.reset();
+    renderSelectedFiles();
+    await mostrarPosts();
+    notify("Publicação salva neste navegador!");
+  } catch {
+    if (mediaSaved) {
+      try {
+        await mediaRecord("delete", post.id);
+      } catch {}
+    }
+    notify(
+      "Não foi possível salvar. Verifique o espaço do navegador ou tente arquivos menores.",
+    );
+  } finally {
+    publishing = false;
+    submit.disabled = false;
+    submit.textContent = "Publicar agora";
+    fileInput.disabled = false;
+    document.querySelector("#btn-arquivo").disabled = false;
+    renderSelectedFiles();
+  }
 });
 
 formEvento.addEventListener("submit", (e) => {
@@ -62,7 +251,7 @@ formEvento.addEventListener("submit", (e) => {
     titulo: document.querySelector("#ev-titulo").value,
     dia: partes[2],
     mes: meses[Number(partes[1]) - 1],
-    autor: "seu.usuario",
+    autor: author.username,
     local: document.querySelector("#ev-local").value,
     cidade: document.querySelector("#ev-cidade").value,
     tipo: tipo,
@@ -79,29 +268,59 @@ formEvento.addEventListener("submit", (e) => {
   notify("Evento criado! Veja na tela Encontros.");
 });
 
-function mostrarPosts() {
-  const itens = posts.map((p) => `
-    <li>
-      <div>
-        <strong>${p.legenda}</strong>
-        <span>${p.veiculo || "Sem veículo"} • ${p.local || "Sem local"}</span>
-      </div>
-      <div class="botoes-post">
-        <button type="button" class="btn-escuro" data-acao="editar" data-id="${p.id}">Editar</button>
-        <button type="button" class="btn-escuro" data-acao="excluir" data-id="${p.id}">Excluir</button>
-      </div>
-    </li>
-  `);
-  listaPosts.innerHTML = itens.join("");
+async function mostrarPosts() {
+  const version = ++renderVersion;
+  postUrls.forEach((url) => URL.revokeObjectURL(url));
+  postUrls = [];
+  listaPosts.replaceChildren();
   semPosts.hidden = posts.length > 0;
-
-  listaPosts.querySelectorAll("button").forEach((botao) => {
-    botao.addEventListener("click", () => {
-      const id = Number(botao.dataset.id);
-      if (botao.dataset.acao === "editar") editarPost(id);
-      else excluirPost(id);
-    });
-  });
+  for (const post of posts) {
+    if (version !== renderVersion) return;
+    const item = document.createElement("li");
+    const content = document.createElement("div");
+    content.className = "conteudo-post";
+    const title = document.createElement("strong");
+    title.textContent = post.legenda;
+    const details = document.createElement("span");
+    details.textContent = `${post.veiculo || "Sem veículo"} • ${post.local || "Sem local"}`;
+    const owner = document.createElement("span");
+    owner.textContent =
+      "@" + (post.autor === "seu.usuario" ? author.username : post.autor);
+    content.append(title, details, owner);
+    const buttons = document.createElement("div");
+    buttons.className = "botoes-post";
+    for (const [label, action] of [
+      ["Editar", editarPost],
+      ["Excluir", excluirPost],
+    ]) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "btn-escuro";
+      button.textContent = label;
+      button.addEventListener("click", () => action(post.id));
+      buttons.append(button);
+    }
+    item.append(content, buttons);
+    listaPosts.append(item);
+    if (!post.quantidadeMidias) continue;
+    try {
+      const record = await mediaRecord("get", post.id);
+      if (version !== renderVersion) return;
+      if (!record?.files?.length) throw new Error("Mídias indisponíveis");
+      const gallery = document.createElement("div");
+      gallery.className = "galeria-post";
+      record.files.forEach((file) =>
+        gallery.append(mediaElement(file, postUrls)),
+      );
+      content.append(gallery);
+    } catch {
+      if (version !== renderVersion) return;
+      const warning = document.createElement("span");
+      warning.textContent =
+        "Os anexos desta publicação não estão disponíveis neste navegador.";
+      content.append(warning);
+    }
+  }
 }
 
 function editarPost(id) {
@@ -114,11 +333,25 @@ function editarPost(id) {
   }
 }
 
-function excluirPost(id) {
-  posts = posts.filter((p) => p.id !== id);
-  salvarPosts();
-  mostrarPosts();
+async function excluirPost(id) {
+  const remaining = posts.filter((post) => post.id !== id);
+  try {
+    localStorage.setItem(CHAVE_POSTS, JSON.stringify(remaining));
+  } catch {
+    notify("Não foi possível excluir a publicação.");
+    return;
+  }
+  const post = posts.find((item) => item.id === id);
+  posts = remaining;
+  await mostrarPosts();
+  if (post?.quantidadeMidias) {
+    try {
+      await mediaRecord("delete", id);
+    } catch {}
+  }
   notify("Publicação excluída.");
 }
-
+window.addEventListener("beforeunload", () =>
+  [...previewUrls, ...postUrls].forEach((url) => URL.revokeObjectURL(url)),
+);
 mostrarPosts();
